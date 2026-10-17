@@ -10,21 +10,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --lavender:#e8eaf6;   /* tone-on-tone 明層 */
-  --indigo:#1a237e;     /* tone-on-tone 濃層 + 明層インク */
-  --gold:#ffd700;       /* triad 1: 宝箱・報酬 */
-  --amethyst:#9370db;   /* triad 2: 魔法・神秘 */
-  --turquoise:#40e0d0;  /* triad 3: 知性・正用 */
-  --danger:#e60012;     /* 危険専用(紅茶パロディエンブレム含む) */
-  --text-dark:#1a237e;
-  --text-light:#e8eaf6;
+  --lavender:#e2e5f6;   /* tone-on-tone 明層 */
+  --indigo:#283955;     /* tone-on-tone 濃層 + 明層インク */
+  --gold:#f9d054;       /* triad 1: 宝箱・報酬 */
+  --amethyst:#b93cd8;   /* triad 2: 魔法・神秘 */
+  --turquoise:#5ab4bf;  /* triad 3: 知性・正用 */
+  --danger:#b2584f;     /* 危険専用(紅茶パロディエンブレム含む) */
+  --text-dark:#283955;
+  --text-light:#f3ecdc;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
   color:var(--text-light);
-  background:#05070f;
+  background:#0d1420;
   overflow-x:hidden;
   position:relative;
 }
@@ -32,16 +32,16 @@ body{
 #depth-bg{
   position:absolute;top:0;left:0;right:0;bottom:0;z-index:-2;
   background:linear-gradient(180deg,
-    #e8eaf6 0%,
-    #e8eaf6 12%,
-    #c5cae9 22%,
-    #9fa8da 30%,
-    #5c6bc0 42%,
-    #3949ab 54%,
-    #283593 66%,
-    #1a237e 78%,
-    #10152e 90%,
-    #05070f 100%);
+    #f9f7ff 0%,
+    #f9f7ff 10%,
+    #e2e5f6 20%,
+    #b9c4e4 30%,
+    #8996cc 40%,
+    #505f96 52%,
+    #526a82 64%,
+    #283955 78%,
+    #1a2438 90%,
+    #0d1420 100%);
 }
 /* floating dust particles */
 .dust{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5}
@@ -61,7 +61,7 @@ nav a:hover{opacity:1;color:var(--gold)}
   position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:90;
   writing-mode:vertical-rl;text-orientation:mixed;
   font-weight:900;font-size:13px;letter-spacing:.25em;
-  color:rgba(232,234,246,.92);text-shadow:0 1px 8px rgba(5,7,15,.65);
+  color:rgba(243,236,220,.92);text-shadow:0 1px 8px rgba(13,20,32,.65);
 }
 #depth-meter .bar{width:3px;height:120px;background:linear-gradient(180deg,var(--turquoise),var(--amethyst));margin:10px auto 0;border-radius:2px;position:relative}
 #depth-meter .knob{position:absolute;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
@@ -77,14 +77,14 @@ nav a:hover{opacity:1;color:var(--gold)}
   font-family:"Zen Old Mincho",serif;font-weight:900;
   font-size:clamp(30px,6vw,64px);line-height:1.28;letter-spacing:.04em;
 }
-.hero h1 .accent{color:var(--amethyst)}
+.hero h1 .accent{color:#6535c9}
 .hero .sub{
   margin-top:34px;font-size:clamp(15px,2vw,19px);font-weight:700;line-height:2;
 }
 .hero .catch{
   margin-top:28px;display:inline-block;background:var(--indigo);color:var(--lavender);
   font-weight:900;padding:12px 30px;font-size:clamp(16px,2.4vw,22px);letter-spacing:.08em;
-  transform:rotate(-1.5deg);box-shadow:6px 6px 0 rgba(26,35,126,.18);
+  transform:rotate(-1.5deg);box-shadow:6px 6px 0 rgba(40,57,85,.2);
 }
 .hero .release{margin-top:38px;font-weight:900;font-size:15px;letter-spacing:.2em;color:var(--indigo)}
 .scroll-cue{position:absolute;bottom:26px;font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.6;animation:cue 1.6s ease-in-out infinite}
@@ -111,7 +111,7 @@ h2.big{
 /* ===== characters (deep layer) ===== */
 .chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;margin-top:20px}
 .char-card{
-  background:rgba(232,234,246,.07);border:1px solid rgba(232,234,246,.18);
+  background:rgba(243,236,220,.06);border:1px solid rgba(243,236,220,.16);
   border-radius:18px;overflow:hidden;backdrop-filter:blur(4px);
   transition:transform .3s,box-shadow .3s;
 }
@@ -124,15 +124,15 @@ h2.big{
 .misuse,.correct{
   border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.9;font-weight:700;
 }
-.misuse{background:rgba(230,0,18,.16);border-left:4px solid var(--danger);margin-bottom:10px}
-.correct{background:rgba(64,224,208,.12);border-left:4px solid var(--turquoise)}
+.misuse{background:rgba(178,88,79,.2);border-left:4px solid var(--danger);margin-bottom:10px}
+.correct{background:rgba(90,180,191,.14);border-left:4px solid var(--turquoise)}
 .misuse .tag,.correct .tag{display:block;font-weight:900;letter-spacing:.15em;font-size:11px;margin-bottom:6px}
-.misuse .tag{color:#ff6b74}
+.misuse .tag{color:#d98a80}
 .correct .tag{color:var(--turquoise)}
 /* ===== combo (deeper layer: gold payoff) ===== */
 .combo-demo{
   margin-top:30px;display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;
-  background:rgba(5,7,15,.4);border:1px solid rgba(255,215,0,.25);border-radius:18px;padding:30px 26px;
+  background:rgba(13,20,32,.5);border:1px solid rgba(249,208,84,.3);border-radius:18px;padding:30px 26px;
 }
 .hand{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .card{
@@ -140,7 +140,7 @@ h2.big{
   padding:8px;font-weight:900;font-size:11px;background:var(--lavender);color:var(--indigo);
   box-shadow:0 4px 10px rgba(0,0,0,.4);
 }
-.card.discard{background:#2c2f4a;color:#7a7fa8;text-decoration:line-through;transform:rotate(6deg) scale(.94)}
+.card.discard{background:#526a82;color:#c9d2e0;text-decoration:line-through;transform:rotate(6deg) scale(.94)}
 .arrow{font-size:34px;color:var(--gold);font-weight:900;text-align:center}
 .arrow small{display:block;font-size:11px;letter-spacing:.2em;margin-top:6px;color:var(--text-light)}
 .atk{font-size:56px;font-weight:900;color:var(--gold);text-align:center;text-shadow:0 0 24px rgba(255,215,0,.5)}
@@ -154,13 +154,13 @@ h2.big{
   font-size:clamp(20px,3.4vw,32px);line-height:2.1;color:var(--lavender);
 }
 .deepest .q .blue{color:var(--amethyst);text-shadow:0 0 18px rgba(147,112,219,.45)}
-.deepest .floor{color:rgba(232,234,246,.4);letter-spacing:.4em;font-weight:900;font-size:12px;margin-bottom:30px}
+.deepest .floor{color:rgba(243,236,220,.4);letter-spacing:.4em;font-weight:900;font-size:12px;margin-bottom:30px}
 /* ===== CTA ===== */
 .cta{padding:90px 20px 60px;text-align:center}
 .cta .btn{
-  display:inline-block;background:var(--gold);color:#10152e;font-weight:900;
+  display:inline-block;background:var(--gold);color:#283955;font-weight:900;
   font-size:20px;letter-spacing:.1em;padding:20px 54px;border-radius:99px;text-decoration:none;
-  box-shadow:0 0 0 6px rgba(255,215,0,.2);transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 0 6px rgba(249,208,84,.22);transition:transform .2s,box-shadow .2s;
 }
 .cta .btn:hover{transform:scale(1.05);box-shadow:0 0 0 10px rgba(255,215,0,.28)}
 .cta .date{margin-top:20px;font-weight:700;font-size:13px;letter-spacing:.2em;opacity:.7}
@@ -297,7 +297,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <footer>
   DUNGEON ESCAPE 100 — 架空ゲームLP練習作品<br>
   This is a fictional landing page. Not an actual game.<br>
-  Character art: gpt-image-2 (Codex OAuth) / Palette: tone-on-tone indigo × triad (HIR-KB-SHR-433)
+  Character art: gpt-image-2 (Codex OAuth) / Palette: AI配色の名前100選(@Codex_jisen)より抽出 — ラベンダー/インディゴ/ネイビー + 金#f9d054/紫#b93cd8/ティール#5ab4bf/ミュートレッド#b2584f
 </footer>
 
 <script>
@@ -331,7 +331,7 @@ const ctx=cv.getContext('2d');let ps=[];
 for(let i=0;i<40;i++)ps.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*2+.6,s:Math.random()*.5+.15,o:Math.random()*.4+.15});
 (function loop(){ctx.clearRect(0,0,cv.width,cv.height);
 ps.forEach(p=>{p.y-=p.s;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
-ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(232,234,246,'+p.o+')';ctx.fill()});
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(243,236,220,'+p.o+')';ctx.fill()});
 requestAnimationFrame(loop)})();
 </script>
 </body>
