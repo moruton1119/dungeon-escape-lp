@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ダンジョンエスケープ | DUNGEON ESCAPE 100</title>
+<meta name="description" content="相方は壊す。俺は計算する。2人1組カードバトルローグライク「ダンジョンエスケープ」架空公式サイト">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f3e7d7;
+  --red:#e60012;
+  --ink:#1a1410;
+  --yellow:#ffd520;
+  --purple:#7b5cff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  color:var(--cream);
+  background:#0d1420;
+  overflow-x:hidden;
+}
+/* ===== depth gradient: scrolls darker ===== */
+#depth-bg{
+  position:fixed;inset:0;z-index:-2;
+  background:linear-gradient(180deg,
+    #f3e7d7 0%,
+    #e8d9c0 8%,
+    #c9b896 16%,
+    #8f7f6a 24%,
+    #4a4a58 36%,
+    #232840 50%,
+    #141a30 66%,
+    #0d1420 82%,
+    #05070f 100%);
+}
+/* floating dust particles */
+.dust{position:fixed;z-index:-1;pointer-events:none;opacity:.5}
+/* ===== header ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;
+  mix-blend-mode:normal;
+}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--red);background:var(--cream);padding:6px 14px;border-radius:99px;font-size:15px;letter-spacing:.05em}
+.logo .num{font-size:22px}
+nav ul{display:flex;gap:26px;list-style:none}
+nav a{color:var(--cream);text-decoration:none;font-weight:700;font-size:13px;letter-spacing:.12em;opacity:.9;transition:opacity .2s}
+nav a:hover{opacity:1;color:var(--yellow)}
+/* depth indicator */
+#depth-meter{
+  position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:90;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-weight:900;font-size:13px;letter-spacing:.25em;
+  color:rgba(243,231,213,.85);text-shadow:0 1px 6px rgba(0,0,0,.5);
+}
+#depth-meter .bar{width:3px;height:120px;background:linear-gradient(180deg,var(--red),var(--purple));margin:10px auto 0;border-radius:2px;position:relative}
+#depth-meter .knob{position:absolute;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
+/* ===== hero (surface / cream) ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;color:var(--ink);position:relative;padding:90px 20px 120px;
+}
+.hero .eyebrow{
+  font-weight:900;color:var(--red);letter-spacing:.35em;font-size:14px;margin-bottom:22px;
+}
+.hero h1{
+  font-family:"Zen Old Mincho",serif;font-weight:900;
+  font-size:clamp(30px,6vw,64px);line-height:1.28;letter-spacing:.04em;
+}
+.hero h1 .accent{color:var(--red)}
+.hero .sub{
+  margin-top:34px;font-size:clamp(15px,2vw,19px);font-weight:700;line-height:2;
+}
+.hero .catch{
+  margin-top:28px;display:inline-block;background:var(--red);color:var(--cream);
+  font-weight:900;padding:12px 30px;font-size:clamp(16px,2.4vw,22px);letter-spacing:.08em;
+  transform:rotate(-1.5deg);box-shadow:6px 6px 0 rgba(26,20,16,.15);
+}
+.hero .release{margin-top:38px;font-weight:900;font-size:15px;letter-spacing:.2em;color:var(--ink)}
+.scroll-cue{position:absolute;bottom:26px;font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.6;animation:cue 1.6s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+/* progress counter, nittoh-style */
+.progress-strip{
+  background:var(--red);color:var(--cream);padding:16px 20px;text-align:center;
+  font-weight:900;letter-spacing:.18em;font-size:14px;
+}
+.progress-strip b{font-size:20px;color:var(--yellow)}
+/* ===== story ===== */
+.section{padding:110px 20px;max-width:1080px;margin:0 auto}
+.kicker{font-weight:900;color:var(--red);letter-spacing:.3em;font-size:13px;margin-bottom:16px}
+.kicker.dark{color:var(--yellow)}
+h2.big{
+  font-family:"Zen Old Mincho",serif;font-weight:900;
+  font-size:clamp(26px,4.4vw,44px);line-height:1.5;margin-bottom:34px;
+}
+.story p{font-size:clamp(15px,1.8vw,18px);line-height:2.3;font-weight:700}
+.story .rule-note{
+  margin-top:26px;padding:20px 26px;border:2px dashed var(--red);border-radius:14px;
+  font-size:15px;line-height:2;
+}
+/* ===== characters ===== */
+.chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;margin-top:20px}
+.char-card{
+  background:rgba(243,231,213,.06);border:1px solid rgba(243,231,213,.18);
+  border-radius:18px;overflow:hidden;backdrop-filter:blur(4px);
+  transition:transform .3s,box-shadow .3s;
+}
+.char-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.char-card img{width:100%;aspect-ratio:2/3;object-fit:cover;object-position:top;display:block}
+.char-body{padding:22px 22px 26px}
+.char-body .idx{font-weight:900;color:var(--yellow);letter-spacing:.25em;font-size:12px}
+.char-body h3{font-size:24px;font-weight:900;margin:8px 0 4px}
+.char-body .job{color:var(--purple);font-weight:700;font-size:13px;letter-spacing:.1em;margin-bottom:14px}
+.misuse,.correct{
+  border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.9;font-weight:700;
+}
+.misuse{background:rgba(230,0,18,.14);border-left:4px solid var(--red);margin-bottom:10px}
+.correct{background:rgba(123,92,255,.16);border-left:4px solid var(--purple)}
+.misuse .tag,.correct .tag{display:block;font-weight:900;letter-spacing:.15em;font-size:11px;margin-bottom:6px}
+.misuse .tag{color:#ff6b74}
+.correct .tag{color:#a58fff}
+/* ===== combo ===== */
+.combo-demo{
+  margin-top:30px;display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;
+  background:rgba(0,0,0,.35);border:1px solid rgba(255,213,32,.25);border-radius:18px;padding:30px 26px;
+}
+.hand{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.card{
+  width:64px;height:92px;border-radius:8px;display:flex;flex-direction:column;justify-content:space-between;
+  padding:8px;font-weight:900;font-size:11px;background:var(--cream);color:var(--ink);
+  box-shadow:0 4px 10px rgba(0,0,0,.4);
+}
+.card.discard{background:#3a3a44;color:#8a8a96;text-decoration:line-through;transform:rotate(6deg) scale(.94)}
+.arrow{font-size:34px;color:var(--yellow);font-weight:900;text-align:center}
+.arrow small{display:block;font-size:11px;letter-spacing:.2em;margin-top:6px;color:var(--cream)}
+.atk{font-size:56px;font-weight:900;color:var(--yellow);text-align:center;text-shadow:0 0 24px rgba(255,213,32,.5)}
+.atk.pop{animation:pop .5s cubic-bezier(.2,2,.4,1) 1}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.combo-note{grid-column:1/-1;text-align:center;font-size:14px;font-weight:700;opacity:.85;line-height:1.9}
+/* ===== deepest: dark gag ===== */
+.deepest{max-width:880px;margin:0 auto;padding:130px 20px 90px;text-align:center}
+.deepest .q{
+  font-family:"Zen Old Mincho",serif;font-weight:900;
+  font-size:clamp(20px,3.4vw,32px);line-height:2.1;color:var(--cream);
+}
+.deepest .q .blue{color:#8fb7ff;text-shadow:0 0 18px rgba(143,183,255,.4)}
+.deepest .floor{color:rgba(243,231,213,.4);letter-spacing:.4em;font-weight:900;font-size:12px;margin-bottom:30px}
+/* ===== CTA ===== */
+.cta{padding:90px 20px 60px;text-align:center}
+.cta .btn{
+  display:inline-block;background:var(--yellow);color:var(--ink);font-weight:900;
+  font-size:20px;letter-spacing:.1em;padding:20px 54px;border-radius:99px;text-decoration:none;
+  box-shadow:0 0 0 6px rgba(255,213,32,.2);transition:transform .2s,box-shadow .2s;
+}
+.cta .btn:hover{transform:scale(1.05);box-shadow:0 0 0 10px rgba(255,213,32,.28)}
+.cta .date{margin-top:20px;font-weight:700;font-size:13px;letter-spacing:.2em;opacity:.7}
+/* ===== footer ===== */
+footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.15em;opacity:.55;line-height:2.2}
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.on{opacity:1;transform:none}
+@media(max-width:720px){
+  nav{display:none}
+  #depth-meter{right:10px;font-size:11px}
+  .combo-demo{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+<div id="depth-bg"></div>
+<canvas class="dust" id="dust"></canvas>
+
+<header>
+  <div class="logo"><span class="num">100</span> DUNGEON ESCAPE</div>
+  <nav>
+    <ul>
+      <li><a href="#story">STORY</a></li>
+      <li><a href="#chars">PARTNERS</a></li>
+      <li><a href="#combo">COMBO</a></li>
+      <li><a href="#cta">PLAY</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="depth-meter">
+  <span id="depth-label">地上 B0F</span>
+  <div class="bar"><div class="knob" id="depth-knob"></div></div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">架空カードバトルローグライク</div>
+  <h1>レジ袋を持ったまま、<br>ダンジョン最深部へ。</h1>
+  <div class="sub">スーパーで買った夜ご飯は、まだ手の中にある。<br>気づけばそこは、地下100階の闇の底だった。</div>
+  <div class="catch">相方は壊す。俺は計算する。</div>
+  <div class="release">2027.4.1 RELEASE（予定）</div>
+  <div class="scroll-cue">▼ さあ、潜ろう</div>
+</section>
+
+<div class="progress-strip">DEPTH PROGRESS <b>100</b> FLOORS — いま、あなたは <b id="now-floor">0</b> 階にいる</div>
+
+<!-- STORY -->
+<section class="section story" id="story">
+  <div class="kicker reveal">STORY / あらすじ</div>
+  <h2 class="big reveal">最深部で出会ったのは、<br>世界最強で、世界一の“勘違い”だった。</h2>
+  <div class="reveal">
+    <p>突然ダンジョンの最深部へ転移させられた主人公。目の前には、餓死寸前で動けない3人の冒険者。<br>
+    この世界では、深層でも“死”は終わりじゃない。仲間の一部を地上に持ち帰れば、もう一度、物語は動き出す。</p>
+    <p>共に地上を目指すパートナーを選べ。ただし彼女たちは、自分の能力の使い方を、根本から間違えている。<br>
+    現代知識と“劣化コピー”の力で、主人公はその圧倒的な火力を——正しい形で、解き放つ。</p>
+    <div class="rule-note">
+      主人公は撃たれ弱い。パートナーは無茶をする。<br>
+      だから、選ぶのはいつも「何を捨てるか」。手札も、スタミナも、能力の質さえも。<br>
+      マイナスを組み替えてプラスに変える——それがこのゲームの、唯一の生き方だ。
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section class="section" id="chars">
+  <div class="kicker dark reveal">PARTNERS / 3人の勘違い</div>
+  <h2 class="big reveal">最強の相方は、<br>今日も間違えている。</h2>
+  <div class="chars">
+    <div class="char-card reveal">
+      <img src="img/fielia.png" alt="フィーリア">
+      <div class="char-body">
+        <div class="idx">PARTNER 01</div>
+        <h3>フィーリア</h3>
+        <div class="job">エレメント・マスター / 風を操る</div>
+        <div class="misuse"><span class="tag">勘違い運用</span>風を一点に圧縮して摩擦発火。氷で手を冷やして、冷やしパンチ。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>圧縮空気は即席の爆弾。氷は武器ではなく、足場と鈍足の罠に。</div>
+      </div>
+    </div>
+    <div class="char-card reveal">
+      <img src="img/tia.png" alt="ティア">
+      <div class="char-body">
+        <div class="idx">PARTNER 02</div>
+        <h3>ティア</h3>
+        <div class="job">サイキック / 空間を操る</div>
+        <div class="misuse"><span class="tag">勘違い運用</span>空間転移を“移動が楽”という理由だけで使用。敵には素手の格闘。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>転移の果ての空間ごと引きちぎる。移動が、最強の攻撃になる。</div>
+      </div>
+    </div>
+    <div class="char-card reveal">
+      <img src="img/miyabi.png" alt="ミヤビ">
+      <div class="char-body">
+        <div class="idx">PARTNER 03</div>
+        <h3>ミヤビ</h3>
+        <div class="job">サムライマスター / 剣技</div>
+        <div class="misuse"><span class="tag">勘違い運用</span>刀を片手で持つ。それ以外は完璧な、天才剣士。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>“両手で持つだけでいい”——それだけで、出力が倍になる。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMBO -->
+<section class="section" id="combo">
+  <div class="kicker dark reveal">COMBO / 火力の解放</div>
+  <h2 class="big reveal">捨てたぶんだけ、<br>数字は跳ねる。</h2>
+  <div class="combo-demo reveal">
+    <div class="hand" id="hand">
+      <div class="card">風圧縮</div>
+      <div class="card discard" id="c2">体力</div>
+      <div class="card discard" id="c3">氷結</div>
+      <div class="card">転移</div>
+    </div>
+    <div class="arrow">→<small>全捨て</small></div>
+    <div class="atk" id="atk">120</div>
+    <div class="combo-note">「捨て身の整理」:手札を捨てた枚数ぶん、相方の攻撃力が乗算される。<br>全捨てすれば——その一撃で、階層の主ごと消し飛ばせる。</div>
+  </div>
+</section>
+
+<!-- DEEPEST -->
+<section class="deepest reveal" id="deepest">
+  <div class="floor">— DEEPEST FLOOR —</div>
+  <div class="q">深層では、“死”は終わりじゃない。<br>何度でも、帰ってこられる。<br><br>それでも、帰ってきた<span class="blue">“あなた”</span>は、<br>前と同じ<span class="blue">“あなた”</span>ですか？</div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <a class="btn reveal" href="#">4/1、最深部から帰還せよ。</a>
+  <div class="date reveal">DUNGEON ESCAPE — 2027.4.1 RELEASE（架空です）</div>
+</section>
+
+<footer>
+  DUNGEON ESCAPE 100 — 架空ゲームLP練習作品<br>
+  This is a fictional landing page. Not an actual game.<br>
+  Character art: gpt-image-2 (Codex OAuth) / Design inspired by NITTOH 100 PICNIC
+</footer>
+
+<script>
+// depth meter follows scroll
+const knob=document.getElementById('depth-knob');
+const label=document.getElementById('depth-label');
+const floorEl=document.getElementById('now-floor');
+const floors=['地上 B0F','B3F','B7F','B17F','B42F','B66F','B88F','最深部'];
+window.addEventListener('scroll',()=>{
+  const p=Math.min(1,window.scrollY/(document.body.scrollHeight-innerHeight));
+  knob.style.top=(p*111)+'px';
+  label.textContent=floors[Math.min(floors.length-1,Math.floor(p*floors.length))];
+  floorEl.textContent=Math.round(p*100);
+},{passive:true});
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// combo animation
+const atk=document.getElementById('atk');
+const comboSec=document.getElementById('combo');
+let played=false;
+new IntersectionObserver(es=>{es.forEach(e=>{
+  if(e.isIntersecting&&!played){played=true;
+    setTimeout(()=>{atk.textContent='480';atk.classList.add('pop')},600);
+    setTimeout(()=>{atk.textContent='1,920';atk.classList.remove('pop');void atk.offsetWidth;atk.classList.add('pop')},1400);
+  }
+})},{threshold:.4}).observe(comboSec);
+// dust particles
+const cv=document.getElementById('dust');cv.width=innerWidth;cv.height=innerHeight;
+const ctx=cv.getContext('2d');let ps=[];
+for(let i=0;i<40;i++)ps.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*2+.6,s:Math.random()*.5+.15,o:Math.random()*.4+.15});
+(function loop(){ctx.clearRect(0,0,cv.width,cv.height);
+ps.forEach(p=>{p.y-=p.s;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(243,231,213,'+p.o+')';ctx.fill()});
+requestAnimationFrame(loop)})();
+</script>
+</body>
+</html>
