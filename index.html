@@ -89,12 +89,6 @@ nav a:hover{opacity:1;color:var(--gold)}
 .hero .release{margin-top:38px;font-weight:900;font-size:15px;letter-spacing:.2em;color:var(--indigo)}
 .scroll-cue{position:absolute;bottom:26px;font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.6;animation:cue 1.6s ease-in-out infinite}
 @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-/* progress counter, nittoh-style red strip (parody emblem) */
-.progress-strip{
-  background:var(--danger);color:var(--lavender);padding:16px 20px;text-align:center;
-  font-weight:900;letter-spacing:.18em;font-size:14px;
-}
-.progress-strip b{font-size:20px;color:var(--gold)}
 /* ===== story (mid layer: light indigo) ===== */
 .section{padding:110px 20px;max-width:1080px;margin:0 auto}
 .kicker{font-weight:900;color:var(--indigo);letter-spacing:.3em;font-size:13px;margin-bottom:16px}
@@ -208,8 +202,6 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
   <div class="scroll-cue">▼ さあ、潜ろう</div>
 </section>
 
-<div class="progress-strip">DEPTH PROGRESS <b>100</b> FLOORS — いま、あなたは <b id="now-floor">0</b> 階にいる</div>
-
 <!-- STORY -->
 <section class="section story" id="story">
   <div class="kicker reveal">STORY / あらすじ</div>
@@ -304,13 +296,11 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 // depth meter follows scroll
 const knob=document.getElementById('depth-knob');
 const label=document.getElementById('depth-label');
-const floorEl=document.getElementById('now-floor');
 const floors=['地上 B0F','B3F','B7F','B17F','B42F','B66F','B88F','最深部'];
 window.addEventListener('scroll',()=>{
   const p=Math.min(1,window.scrollY/(document.body.scrollHeight-innerHeight));
   knob.style.top=(p*111)+'px';
   label.textContent=floors[Math.min(floors.length-1,Math.floor(p*floors.length))];
-  floorEl.textContent=Math.round(p*100);
 },{passive:true});
 // reveal on scroll
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.18});
