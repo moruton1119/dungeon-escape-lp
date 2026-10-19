@@ -120,6 +120,21 @@ h2.big{
   margin-top:26px;padding:20px 26px;border:2px dashed var(--amethyst);border-radius:14px;
   font-size:15px;line-height:2;color:var(--indigo);
 }
+
+/* headline cards */
+.headline-card{
+  background:rgba(255,255,255,.6);border:1px solid rgba(80,95,150,.3);border-radius:16px;
+  padding:38px 34px 34px;max-width:820px;margin:0 auto 10px;
+  box-shadow:0 8px 30px rgba(13,20,32,.12);
+  backdrop-filter:blur(6px);
+}
+.headline-card .big{margin-bottom:26px}
+.section.dark .headline-card{
+  background:rgba(13,20,32,.6);border:1px solid rgba(249,208,84,.3);
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+}
+.headline-card .story-toggle{margin-top:0}
+#chars h2.big,#combo h2.big{color:var(--lavender)}
 /* ===== characters (deep layer) ===== */
 .chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;margin-top:20px}
 .char-card{
@@ -270,11 +285,13 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <!-- STORY -->
 <section class="section story" id="story">
   <div class="kicker reveal">STORY / あらすじ</div>
-  <h2 class="big reveal">最深部で出会ったのは、<br>世界最強で、世界一の“勘違い”だった。</h2>
-  <button class="story-toggle reveal" id="story-toggle" aria-expanded="false" aria-controls="story-body">
-    <span class="st-label">READ MORE</span>
-    <span class="st-arrow">▼</span>
-  </button>
+  <div class="headline-card reveal">
+    <h2 class="big">最深部で出会ったのは、<br>世界最強で、世界一の“勘違い”だった。</h2>
+    <button class="story-toggle" id="story-toggle" aria-expanded="false" aria-controls="story-body">
+      <span class="st-label">READ MORE</span>
+      <span class="st-arrow">▼</span>
+    </button>
+  </div>
   <div class="story-body" id="story-body">
     <p>突然ダンジョンの最深部へ転移させられた主人公。目の前には、餓死寸前で動けない3人の冒険者。<br>
     この世界では、深層でも“死”は終わりじゃない。仲間の一部を地上に持ち帰れば、もう一度、物語は動き出す。</p>
@@ -290,7 +307,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <!-- CHARACTERS -->
 <section class="section" id="chars">
   <div class="kicker dark reveal">PARTNERS / 3人の勘違い</div>
-  <h2 class="big reveal">最強の相方は、<br>今日も間違えている。</h2>
+  <div class="headline-card reveal"><h2 class="big">最強の相方は、<br>今日も間違えている。</h2></div>
   <div class="chars">
     <div class="char-card reveal">
       <img src="img/miyabi.png" alt="ミヤビ">
@@ -331,7 +348,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <!-- COMBO -->
 <section class="section" id="combo">
   <div class="kicker dark reveal">COMBO / 火力の解放</div>
-  <h2 class="big reveal">相方が2ターンかかる大技を、<br>1ターンで撃たせる。</h2>
+  <div class="headline-card reveal"><h2 class="big">相方が2ターンかかる大技を、<br>1ターンで撃たせる。</h2></div>
   <div class="pquote reveal">「魔法に、化学を足すだけの話だ。」<span>——主人公</span></div>
   <div class="combo-demo reveal">
     <div class="steps">
