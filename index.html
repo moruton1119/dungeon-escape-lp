@@ -124,17 +124,30 @@ h2.big{
 /* headline cards */
 .headline-card{
   background:rgba(255,255,255,.6);border:1px solid rgba(80,95,150,.3);border-radius:16px;
-  padding:38px 34px 34px;max-width:820px;margin:0 auto 10px;
+  padding:34px 34px 30px;max-width:820px;margin:14px auto 10px;
   box-shadow:0 8px 30px rgba(13,20,32,.12);
   backdrop-filter:blur(6px);
 }
 .headline-card .big{margin-bottom:26px}
+.headline-card .kicker{margin-bottom:18px}
+.headline-card .kicker.dark{background:rgba(249,208,84,.14)}
 .section.dark .headline-card{
   background:rgba(13,20,32,.6);border:1px solid rgba(249,208,84,.3);
   box-shadow:0 8px 30px rgba(0,0,0,.4);
 }
 .headline-card .story-toggle{margin-top:0}
 #chars h2.big,#combo h2.big{color:var(--lavender)}
+
+/* full-section cards */
+.section-card{
+  background:rgba(13,20,32,.66);border:1px solid rgba(249,208,84,.28);border-radius:20px;
+  padding:44px 38px 48px;max-width:1180px;margin:14px auto 10px;
+  box-shadow:0 10px 40px rgba(0,0,0,.42);
+  backdrop-filter:blur(6px);
+}
+.section-card .kicker{margin-bottom:18px}
+.section-card .big{margin-bottom:34px}
+.section-card h2.big{color:var(--lavender)}
 /* ===== characters (deep layer) ===== */
 .chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;margin-top:20px}
 .char-card{
@@ -284,8 +297,8 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 <!-- STORY -->
 <section class="section story" id="story">
-  <div class="kicker reveal">STORY / あらすじ</div>
   <div class="headline-card reveal">
+    <div class="kicker">STORY / あらすじ</div>
     <h2 class="big">最深部で出会ったのは、<br>世界最強で、世界一の“勘違い”だった。</h2>
     <button class="story-toggle" id="story-toggle" aria-expanded="false" aria-controls="story-body">
       <span class="st-label">READ MORE</span>
@@ -306,9 +319,10 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 <!-- CHARACTERS -->
 <section class="section" id="chars">
-  <div class="kicker dark reveal">PARTNERS / 3人の勘違い</div>
-  <div class="headline-card reveal"><h2 class="big">最強の相方は、<br>今日も間違えている。</h2></div>
-  <div class="chars">
+  <div class="section-card reveal">
+    <div class="kicker dark">PARTNERS / 3人の勘違い</div>
+    <h2 class="big">最強の相方は、<br>今日も間違えている。</h2>
+    <div class="chars">
     <div class="char-card reveal">
       <img src="img/miyabi.png" alt="ミヤビ">
       <div class="char-body">
@@ -343,13 +357,16 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
     </div>
     
   </div>
+
+  </div>
 </section>
 
 <!-- COMBO -->
 <section class="section" id="combo">
-  <div class="kicker dark reveal">COMBO / 火力の解放</div>
-  <div class="headline-card reveal"><h2 class="big">相方が2ターンかかる大技を、<br>1ターンで撃たせる。</h2></div>
-  <div class="pquote reveal">「魔法に、化学を足すだけの話だ。」<span>——主人公</span></div>
+  <div class="section-card reveal">
+    <div class="kicker dark">COMBO / 火力の解放</div>
+    <h2 class="big">相方が2ターンかかる大技を、<br>1ターンで撃たせる。</h2>
+    <div class="pquote">「魔法に、化学を足すだけの話だ。」<span>——主人公</span></div>
   <div class="combo-demo reveal">
     <div class="steps">
       <div class="step"><span class="who">相方</span>風圧縮</div>
@@ -360,6 +377,8 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
     </div>
     <div class="turn" id="turn">2ターン</div>
     <div class="combo-note">火の魔法は、本来「風圧縮→着火→攻撃」の2ターン工程。<br>相方が風を縮め始めたターンに主人公が着火を差し込めば、工程は1つに圧縮される。<br>手札は3エネルギー。攻撃に振るか、このターンを守るか。地上に近づくほど仲良くなり、相方の攻撃の選択率まで変えられる。</div>
+  </div>
+
   </div>
 </section>
 
