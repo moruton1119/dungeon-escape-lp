@@ -122,6 +122,19 @@ h2.big{
 .char-body .idx{font-weight:900;color:var(--gold);letter-spacing:.25em;font-size:12px}
 .char-body h3{font-size:24px;font-weight:900;margin:8px 0 4px}
 .char-body .job{color:var(--amethyst);font-weight:700;font-size:13px;letter-spacing:.1em;margin-bottom:14px}
+.serif{
+  font-family:"Zen Old Mincho",serif;font-weight:900;font-size:17px;line-height:1.8;
+  color:var(--gold);margin:4px 0 16px;min-height:3.6em;
+}
+.pquote{
+  font-family:"Zen Old Mincho",serif;font-weight:900;font-size:clamp(18px,2.4vw,26px);
+  line-height:1.8;color:var(--gold);margin:-14px 0 30px;
+}
+.pquote span{display:block;font-size:12px;letter-spacing:.25em;color:var(--text-light);opacity:.7;font-family:"Zen Kaku Gothic New",sans-serif;margin-top:6px;font-weight:700}
+.fline{
+  font-family:"Zen Old Mincho",serif;font-weight:900;font-size:clamp(22px,3.2vw,34px);
+  line-height:1.8;color:var(--gold);margin-bottom:36px;
+}
 .misuse,.correct{
   border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.9;font-weight:700;
 }
@@ -213,7 +226,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
   <div class="eyebrow">架空カードバトルローグライク</div>
   <h1>コンビニ帰りに、<br>ダンジョン<span class="accent">最深部</span>へ。</h1>
   <div class="sub">コンビニで買った夜ご飯は、まだ手の中にある。<br>気づけばそこは、地下100階の闇の底だった。</div>
-  <div class="catch">二人で一人前の、条件付き無双。</div>
+  <div class="catch">相方の暴走を、最強に換える。</div>
   <div class="release">2027.4.1 RELEASE（予定）</div>
   <div class="scroll-cue">▼ さあ、潜ろう</div>
 </section>
@@ -245,6 +258,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
         <div class="idx">PARTNER 01</div>
         <h3>フィーリア</h3>
         <div class="job">エレメント・マスター / 風を操る</div>
+        <div class="serif">「風をぎゅーって押し縮めると、ぽっとあたたかくなるんだよ!」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>風を一点に圧縮して摩擦発火。氷で手を冷やして、冷やしパンチ。</div>
         <div class="correct"><span class="tag">主人公の計算</span>圧縮空気は即席の爆弾。氷は武器ではなく、足場と鈍足の罠に。</div>
       </div>
@@ -255,6 +269,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
         <div class="idx">PARTNER 02</div>
         <h3>ティア</h3>
         <div class="job">サイキック / 空間を操る</div>
+        <div class="serif">「転移は移動が楽になるためのもの。敵は、この拳で倒す。」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>空間転移を“移動が楽”という理由だけで使用。敵には素手の格闘。</div>
         <div class="correct"><span class="tag">主人公の計算</span>転移の果ての空間ごと引きちぎる。移動が、最強の攻撃になる。</div>
       </div>
@@ -265,6 +280,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
         <div class="idx">PARTNER 03</div>
         <h3>ミヤビ</h3>
         <div class="job">サムライマスター / 剣技</div>
+        <div class="serif">「我が剣、片手にて十分。」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>刀を片手で持つ。それ以外は完璧な、天才剣士。</div>
         <div class="correct"><span class="tag">主人公の計算</span>“両手で持つだけでいい”——それだけで、出力が倍になる。</div>
       </div>
@@ -276,6 +292,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <section class="section" id="combo">
   <div class="kicker dark reveal">COMBO / 火力の解放</div>
   <h2 class="big reveal">相方が2ターンかかる大技を、<br>1ターンで撃たせる。</h2>
+  <div class="pquote reveal">「魔法に、化学を足すだけの話だ。」<span>——主人公</span></div>
   <div class="combo-demo reveal">
     <div class="steps">
       <div class="step"><span class="who">相方</span>風圧縮</div>
@@ -297,6 +314,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 <!-- CTA -->
 <section class="cta" id="cta">
+  <div class="fline reveal">最強は、二人で初めて完成する。</div>
   <a class="btn reveal" href="#">4/1、最深部から帰還せよ。</a>
   <div class="date reveal">DUNGEON ESCAPE — 2027.4.1 RELEASE（架空です）</div>
 </section>
