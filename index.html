@@ -138,6 +138,19 @@ h2.big{
 .headline-card .story-toggle{margin-top:0}
 #chars h2.big,#combo h2.big{color:var(--lavender)}
 
+
+/* char card accordion */
+.char-toggle{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;background:var(--indigo);border:none;border-radius:4px;
+  color:#fff;font-weight:900;letter-spacing:.25em;font-size:11px;
+  padding:9px 0;cursor:pointer;margin-top:12px;transition:background .3s ease;
+}
+.char-toggle:hover{background:var(--navy)}
+.char-toggle .ct-arrow{font-size:9px;transition:transform .35s ease}
+.char-toggle.open .ct-arrow{transform:rotate(180deg)}
+.char-details{max-height:0;overflow:hidden;opacity:0;transition:max-height .7s cubic-bezier(.4,0,.2,1),opacity .4s ease}
+.char-details.open{max-height:900px;opacity:1;margin-top:14px}
 /* full-section cards */
 .section-card{
   background:rgba(13,20,32,.66);border:1px solid rgba(249,208,84,.28);border-radius:20px;
@@ -334,20 +347,22 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
       <div class="char-body">
         <div class="idx">PARTNER 03</div>
         <h3>ミヤビ</h3>
-        <div class="job">サムライマスター / 剣技</div>
+        <button class="char-toggle" aria-expanded="false"><span class="ct-label">開く</span><span class="ct-arrow">▼</span></button>
+      <div class="char-details"><div class="job">サムライマスター / 剣技</div>
         <div class="serif">「我が剣、片手にて十分。」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>刀を片手で持つ。それ以外は完璧な、天才剣士。</div>
-        <div class="correct"><span class="tag">主人公の計算</span>“両手で持つだけでいい”——それだけで、出力が倍になる。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>“両手で持つだけでいい”——それだけで、出力が倍になる。</div></div>
       </div>
     </div><div class="char-card reveal">
       <img src="img/tia2.png" alt="ティア">
       <div class="char-body">
         <div class="idx">PARTNER 02</div>
         <h3>ティア</h3>
-        <div class="job">サイキック / 空間を操る</div>
+        <button class="char-toggle" aria-expanded="false"><span class="ct-label">開く</span><span class="ct-arrow">▼</span></button>
+      <div class="char-details"><div class="job">サイキック / 空間を操る</div>
         <div class="serif">「転移は移動が楽になるためのもの。敵は、この拳で倒す。」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>空間転移を“移動が楽”という理由だけで使用。敵には素手の格闘。</div>
-        <div class="correct"><span class="tag">主人公の計算</span>転移の果ての空間ごと引きちぎる。移動が、最強の攻撃になる。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>転移の果ての空間ごと引きちぎる。移動が、最強の攻撃になる。</div></div>
       </div>
     </div>
     <div class="char-card reveal">
@@ -355,10 +370,11 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
       <div class="char-body">
         <div class="idx">PARTNER 01</div>
         <h3>フィーリア</h3>
-        <div class="job">エレメント・マスター / 風を操る</div>
+        <button class="char-toggle" aria-expanded="false"><span class="ct-label">開く</span><span class="ct-arrow">▼</span></button>
+      <div class="char-details"><div class="job">エレメント・マスター / 風を操る</div>
         <div class="serif">「風をぎゅーって押し縮めると、ぽっとあたたかくなるんだよ!」</div>
         <div class="misuse"><span class="tag">勘違い運用</span>風を一点に圧縮して摩擦発火。氷で手を冷やして、冷やしパンチ。</div>
-        <div class="correct"><span class="tag">主人公の計算</span>圧縮空気は即席の爆弾。氷は武器ではなく、足場と鈍足の罠に。</div>
+        <div class="correct"><span class="tag">主人公の計算</span>圧縮空気は即席の爆弾。氷は武器ではなく、足場と鈍足の罠に。</div></div>
       </div>
     </div>
     
@@ -438,6 +454,22 @@ for(let i=0;i<40;i++)ps.push({x:Math.random()*cv.width,y:Math.random()*cv.height
 ps.forEach(p=>{p.y-=p.s;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
 ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(243,236,220,'+p.o+')';ctx.fill()});
 requestAnimationFrame(loop)})();
+
+
+// char card accordion
+(function(){
+  document.querySelectorAll('.char-card').forEach(function(card){
+    var btn = card.querySelector('.char-toggle');
+    var det = card.querySelector('.char-details');
+    if(!btn || !det) return;
+    btn.addEventListener('click', function(){
+      var open = det.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.ct-label').textContent = open ? '閉じる' : '開く';
+    });
+  });
+})();
 
 // STORY toggle (KH3 style)
 (function(){
