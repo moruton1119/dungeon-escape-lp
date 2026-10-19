@@ -533,6 +533,38 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 </footer>
 
 <script>
+// depth meter follows scroll
+const knob=document.getElementById('depth-knob');
+const label=document.getElementById('depth-label');
+const floors=['地上 B0F','B3F','B7F','B17F','B42F','B66F','B88F','最深部'];
+window.addEventListener('scroll',()=>{
+  const p=Math.min(1,window.scrollY/(document.body.scrollHeight-innerHeight));
+  knob.style.top=(p*111)+'px';
+  label.textContent=floors[Math.min(floors.length-1,Math.floor(p*floors.length))];
+},{passive:true});
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// combo animation: protagonist supplies ignition -> process compressed
+const turn=document.getElementById('turn');
+const ignite=document.getElementById('ignite');
+const comboSec=document.getElementById('combo');
+let played=false;
+new IntersectionObserver(es=>{es.forEach(e=>{
+  if(e.isIntersecting&&!played){played=true;
+    setTimeout(()=>{ignite.classList.add('hit')},500);
+    setTimeout(()=>{turn.innerHTML='1ターン目<small>本来以上の火力で、大魔法が起動する</small>';turn.classList.add('pop')},1200);
+  }
+})},{threshold:.4}).observe(comboSec);
+// dust particles
+const cv=document.getElementById('dust');cv.width=innerWidth;cv.height=innerHeight;
+const ctx=cv.getContext('2d');let ps=[];
+for(let i=0;i<40;i++)ps.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*2+.6,s:Math.random()*.5+.15,o:Math.random()*.4+.15});
+(function loop(){ctx.clearRect(0,0,cv.width,cv.height);
+ps.forEach(p=>{p.y-=p.s;if(p.y<-4){p.y=cv.height+4;p.x=Math.random()*cv.width}
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(243,236,220,'+p.o+')';ctx.fill()});
+requestAnimationFrame(loop)})();
+
 // partner view switcher
 (function(){
   var thumbs = document.querySelectorAll('.pv-thumb');
