@@ -148,6 +148,12 @@ h2.big{
 .section-card .kicker{margin-bottom:18px}
 .section-card .big{margin-bottom:34px}
 .section-card h2.big{color:var(--lavender)}
+.section-card.light{
+  background:rgba(255,255,255,.6);border:1px solid rgba(80,95,150,.3);
+  box-shadow:0 8px 30px rgba(13,20,32,.12);
+}
+.section-card.light h2.big{color:var(--indigo)}
+.section-card .story-body.open{margin-top:34px}
 /* ===== characters (deep layer) ===== */
 .chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;margin-top:20px}
 .char-card{
@@ -297,15 +303,14 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 <!-- STORY -->
 <section class="section story" id="story">
-  <div class="headline-card reveal">
+  <div class="section-card light reveal">
     <div class="kicker">STORY / あらすじ</div>
     <h2 class="big">最深部で出会ったのは、<br>世界最強で、世界一の“勘違い”だった。</h2>
     <button class="story-toggle" id="story-toggle" aria-expanded="false" aria-controls="story-body">
       <span class="st-label">READ MORE</span>
       <span class="st-arrow">▼</span>
     </button>
-  </div>
-  <div class="story-body" id="story-body">
+    <div class="story-body" id="story-body">
     <p>突然ダンジョンの最深部へ転移させられた主人公。目の前には、餓死寸前で動けない3人の冒険者。<br>
     この世界では、深層でも“死”は終わりじゃない。仲間の一部を地上に持ち帰れば、もう一度、物語は動き出す。</p>
     <p>共に地上を目指すパートナーを選べ。ただし彼女たちは、自分の能力の使い方を、根本から間違えている。<br>
@@ -314,6 +319,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
       主人公は撃たれ弱い。パートナーは勝手に動く。主人公にできるのは、現代知識で工程を縮め、火力を増幅することだけ。<br>
       相方の“勘違い”を、正しい火力に組み替える——それがこのゲームの、唯一の生き方だ。
     </div>
+  </div>
   </div>
 </section>
 
