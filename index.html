@@ -68,25 +68,32 @@ nav a:hover{opacity:1;color:var(--gold)}
 /* ===== hero (surface / lavender light) ===== */
 .hero{
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;color:var(--text-dark);position:relative;padding:90px 20px 120px;
+  text-align:center;color:#f3ecdc;position:relative;padding:90px 20px 120px;
+  background:url(img/hero_bg.png) center 30%/cover no-repeat #0d1420;
 }
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(13,20,32,.62),rgba(13,20,32,.18) 42%,rgba(13,20,32,.66));
+}
+.hero>*{position:relative;z-index:1}
 .hero .eyebrow{
-  font-weight:900;color:var(--indigo);letter-spacing:.35em;font-size:14px;margin-bottom:22px;
+  font-weight:900;color:var(--gold);letter-spacing:.35em;font-size:14px;margin-bottom:22px;
 }
 .hero h1{
   font-family:"Zen Old Mincho",serif;font-weight:900;
   font-size:clamp(30px,6vw,64px);line-height:1.28;letter-spacing:.04em;
 }
-.hero h1 .accent{color:#6535c9}
+.hero h1 .accent{color:#c77dff;text-shadow:0 0 22px rgba(185,60,216,.5)}
 .hero .sub{
   margin-top:34px;font-size:clamp(15px,2vw,19px);font-weight:700;line-height:2;
+  text-shadow:0 1px 10px rgba(13,20,32,.8);
 }
 .hero .catch{
-  margin-top:28px;display:inline-block;background:var(--indigo);color:var(--lavender);
+  margin-top:28px;display:inline-block;background:var(--gold);color:#283955;
   font-weight:900;padding:12px 30px;font-size:clamp(16px,2.4vw,22px);letter-spacing:.08em;
-  transform:rotate(-1.5deg);box-shadow:6px 6px 0 rgba(40,57,85,.2);
+  transform:rotate(-1.5deg);box-shadow:0 6px 24px rgba(13,20,32,.6);
 }
-.hero .release{margin-top:38px;font-weight:900;font-size:15px;letter-spacing:.2em;color:var(--indigo)}
+.hero .release{margin-top:38px;font-weight:900;font-size:15px;letter-spacing:.2em;color:rgba(243,236,220,.88)}
 .scroll-cue{position:absolute;bottom:26px;font-size:12px;letter-spacing:.3em;font-weight:700;opacity:.6;animation:cue 1.6s ease-in-out infinite}
 @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 /* ===== story (mid layer: light indigo) ===== */
