@@ -379,12 +379,14 @@ h2.big{
 .bd-hidden{display:none}
 @media(max-width:700px){
   .sts-field{padding-top:110px}
-  .sts-hand{min-height:150px;padding:0 4px;justify-content:flex-start}
-  .bd-card{width:80px;margin:0 -12px;flex:0 0 auto}
-  .bd-card .bd-desc{display:none}
-  .bd-card:hover{transform:rotate(0deg) translateY(-14px) scale(1.18)}
+  .sts-hand{min-height:0;padding:0;flex-wrap:wrap;justify-content:center;gap:8px}
+  .bd-card{width:calc(50% - 6px);margin:0;transform:none;--rot:0deg}
+  .bd-card:hover{transform:translateY(-4px) scale(1.04)}
+  .bd-card .bd-desc{display:block;font-size:10.5px;min-height:0}
+  .bd-card .bd-name{font-size:12.5px}
   .sts-boss{width:140px}
   .sts-ally{min-width:0;width:100%}
+  .sts-end{position:static;display:block;margin:12px auto 0}
 }
 /* ===== deepest: dark gag ===== */
 .deepest{
@@ -404,7 +406,7 @@ h2.big{
 .deepest .q .blue{color:var(--amethyst);text-shadow:0 0 18px rgba(147,112,219,.45)}
 .deepest .floor{color:rgba(243,236,220,.4);letter-spacing:.4em;font-weight:900;font-size:12px;margin-bottom:30px}
 /* ===== CTA ===== */
-.cta{padding:90px 20px 60px;text-align:center}
+.cta{background:#05070c;padding:120px 20px 140px;text-align:center;position:relative;
 .cta .btn{
   display:inline-block;background:var(--gold);color:#283955;font-weight:900;
   font-size:20px;letter-spacing:.1em;padding:20px 54px;border-radius:99px;text-decoration:none;
