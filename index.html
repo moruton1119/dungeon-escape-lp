@@ -175,7 +175,8 @@ h2.big{
 }
 .pv-panel .misuse .tag{background:rgba(178,88,79,.35);color:#e8b6b0;border:1px solid rgba(178,88,79,.7)}
 .pv-panel .correct .tag{background:rgba(90,180,191,.25);color:#bfe8ec;border:1px solid rgba(90,180,191,.7)}
-.pv-thumbs{display:flex;gap:12px;margin-top:18px;justify-content:center}
+.pv-thumbs{display:flex;gap:12px;margin-top:18px;justify-content:safe center;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.pv-thumbs::-webkit-scrollbar{display:none}
 .pv-thumb{
   position:relative;width:120px;height:76px;border:2px solid rgba(249,208,84,.25);border-radius:10px;
   overflow:hidden;cursor:pointer;padding:0;background:transparent;transition:all .3s ease;flex:0 0 auto;
@@ -379,11 +380,14 @@ h2.big{
 .bd-hidden{display:none}
 @media(max-width:700px){
   .sts-field{padding-top:110px}
-  .sts-hand{min-height:0;padding:0;flex-wrap:wrap;justify-content:center;gap:8px}
-  .bd-card{width:calc(50% - 6px);margin:0;transform:none;--rot:0deg}
-  .bd-card:hover{transform:translateY(-4px) scale(1.04)}
-  .bd-card .bd-desc{display:block;font-size:10.5px;min-height:0}
-  .bd-card .bd-name{font-size:12.5px}
+  .sts-hand{min-height:120px;padding:0 2px;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;justify-content:flex-start;scrollbar-width:none}
+  .sts-hand::-webkit-scrollbar{display:none}
+  .bd-card{width:104px;margin:0 3px;flex:0 0 auto;--rot:0deg;transform:none}
+  .bd-card:hover{transform:translateY(-8px) scale(1.1)}
+  .bd-card .bd-desc{display:block;font-size:9px;line-height:1.4;min-height:0}
+  .bd-card .bd-name{font-size:11.5px}
+  .bd-card .bd-type{font-size:8.5px}
+  .bd-card .bd-cost{font-size:10px}
   .sts-boss{width:140px}
   .sts-ally{min-width:0;width:100%}
   .sts-end{position:static;display:block;margin:12px auto 0}
