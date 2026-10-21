@@ -353,7 +353,7 @@ h2.big{
 .sts-orb{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#f9d054 55%,#a8842a);border:2px solid rgba(13,20,32,.7);box-shadow:0 0 10px rgba(249,208,84,.55)}
 .sts-orb.used{background:#232c44;border-color:rgba(13,20,32,.7);box-shadow:none}
 .sts-handwrap{position:relative;margin-top:14px}
-.sts-hand{display:flex;justify-content:center;align-items:flex-end;min-height:190px;padding:0 8px}
+.sts-hand{display:flex;justify-content:safe center;align-items:flex-end;min-height:190px;padding:0 8px;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch}
 .bd-card{--rot:0deg;position:relative;width:128px;flex:0 0 auto;transform:rotate(var(--rot)) translateY(14px);transform-origin:bottom center;transition:transform .18s ease,z-index 0s;border-radius:10px;overflow:hidden;cursor:pointer;background:#101a30;border:2px solid #3d5a96;box-shadow:0 6px 16px rgba(0,0,0,.5);margin:0 -7px}
 .bd-card:hover{transform:rotate(0deg) translateY(-26px) scale(1.32);z-index:50;box-shadow:0 18px 36px rgba(0,0,0,.7);border-color:var(--gold)}
 .bd-card.bd-helps{border-color:var(--gold);box-shadow:0 0 14px rgba(249,208,84,.5)}
@@ -379,16 +379,18 @@ h2.big{
 .bd-hidden{display:none}
 @media(max-width:700px){
   .sts-field{padding-top:110px}
-  .sts-hand{min-height:150px}
-  .bd-card{width:96px;margin:0 -9px}
+  .sts-hand{min-height:150px;padding:0 4px;justify-content:flex-start}
+  .bd-card{width:80px;margin:0 -12px;flex:0 0 auto}
   .bd-card .bd-desc{display:none}
+  .bd-card:hover{transform:rotate(0deg) translateY(-14px) scale(1.18)}
   .sts-boss{width:140px}
   .sts-ally{min-width:0;width:100%}
 }
 /* ===== deepest: dark gag ===== */
 .deepest{
-  position:relative;max-width:none;padding:170px 20px 150px;text-align:center;
-  background:url(img/hero_bg.png) center 20%/cover no-repeat #0d1420;
+  position:relative;max-width:none;min-height:100svh;padding:170px 20px 150px;text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
+  background:url(img/hero_bg.png) center/cover no-repeat #0d1420;
 }
 .deepest::after{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
