@@ -841,6 +841,7 @@ function cardHelpsNow(id) {
 // ---- カード効果 ----
 function playCard(handIndex) {
   if (S.over || S.phase !== "player") return;
+  if (!$("modalBg").classList.contains("bd-hidden")) return;
   const id = S.hand[handIndex];
   const c = CARDS[id];
   if (S.player.energy < c.cost) { log("エネルギー不足!"); return; }
@@ -939,6 +940,7 @@ function dealToEnemy(n, src) {
 
 function endTurn() {
   if (S.over || S.phase !== "player") return;
+  if (!$("modalBg").classList.contains("bd-hidden")) return;
   S.phase = "resolve";
   if (S.partner.seq) { advancePartnerStep(false); }
   else { chooseNextSequence(); }
@@ -984,7 +986,7 @@ function checkEnd() {
 
 function askPreference() {
   const btns = ["火", "氷", "風"].map(el =>
-    [SEQUENCES[{ "火":"fire", "氷":"ice", "風":"wind" }[el]].icon + " " + el + "を推す (選択率×1.5)", () => { S.prefElement = el; hideModal(); spawnEnemy(); S.partner.seq = null; S.discard.push(...S.hand); S.hand = []; chooseNextSequence(); drawCards(5); log("💕 フィーリアとの仲良し度が深まった! 【" + el + "】を推すことにした"); render(); }]
+    [SEQUENCES[{ "火":"fire", "氷":"ice", "風":"wind" }[el]].icon + " " + el + "を推す (選択率×1.5)", () => { S.prefElement = el; hideModal(); S.phase = "player"; spawnEnemy(); S.partner.seq = null; S.partner.compact = false; S.partner.stepIndex = -1; S.partner.pendingBuff = 0; S.discard.push(...S.hand); S.hand = []; S.player.energy = 3; S.player.block = 0; chooseNextSequence(); drawCards(5); log("💕 フィーリアとの仲良し度が深まった! 【" + el + "】を推すことにした"); log("— 階層" + S.floor + " バトル開始 —"); render(); }]
   );
   showModal("💕 仲良し度アップ!", "フィーリアとの絆が深まった。<br>次の階層から、相方の攻撃の選択率を調整できる。<br>どの属性を推す?", btns);
 }
