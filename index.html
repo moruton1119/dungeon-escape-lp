@@ -501,6 +501,132 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 
 
+<!-- DEMO -->
+<section class="section" id="demo">
+  <div class="section-card reveal">
+    <div class="kicker dark">DEMO PLAY / ブラウザで試遊</div>
+    <h2 class="big">3エネルギーで、工程を縮めろ。</h2>
+    <div class="demo-note">戦闘システムのプロトタイプ。相方は工程制で攻撃を選び、主人公のカードが工程を圧縮・火力を増幅する。</div>
+    <div class="battle-demo">
+<style>* { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1420; color: #e8eaf6; font-family: "Segoe UI", "Hiragino Sans", sans-serif; padding: 16px; }
+  h1 { font-size: 18px; color: #f9d054; margin-bottom: 8px; }
+  .bd-panel { background: #16203a; border: 1px solid #2a3a5e; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+  .bd-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bd-col { flex: 1; min-width: 240px; }
+  .bd-label { font-size: 11px; color: #8fa3d0; letter-spacing: 1px; }
+  .bd-hpbar { background: #0d1420; border-radius: 4px; height: 14px; margin: 4px 0; overflow: hidden; }
+  .bd-hpbar > div { height: 100%; background: #b2584f; transition: width .3s; }
+  .bd-hpbar.ally > div { background: #5ab4bf; }
+  .bd-big { font-size: 20px; font-weight: bold; }
+  .bd-chara { display: flex; gap: 10px; align-items: flex-start; }
+  .bd-chara img { width: 84px; height: 84px; object-fit: cover; border-radius: 8px; border: 2px solid #3d5a96; }
+  .bd-card { background: #1d2a4d; border: 1px solid #3d5a96; border-radius: 8px; padding: 10px; width: 158px; cursor: pointer; transition: transform .1s, box-shadow .1s; position: relative; }
+  .bd-card:hover { transform: translateY(-4px); border-color: #f9d054; }
+  .bd-card.bd-disabled { opacity: .4; cursor: not-allowed; }
+  .bd-card.bd-helps { box-shadow: 0 0 8px rgba(249,208,84,.45); border-color: #f9d054; }
+  .bd-card .bd-name { font-weight: bold; font-size: 13px; margin-bottom: 2px; }
+  .bd-card .bd-cost { color: #f9d054; font-size: 12px; }
+  .bd-card .bd-type { font-size: 10px; color: #b93cd8; }
+  .bd-card .bd-desc { font-size: 11px; color: #aab8dd; margin-top: 4px; }
+  .bd-card .bd-icon { font-size: 26px; margin-bottom: 4px; }
+  .bd-card .bd-hint { position: absolute; top: 6px; right: 8px; font-size: 14px; }
+  button.bd-end { background: #b93cd8; color: #fff; border: none; padding: 10px 24px; border-radius: 6px; font-size: 15px; cursor: pointer; }
+  button.bd-end:hover { background: #d05ae8; }
+  #log { font-size: 12px; max-height: 140px; overflow-y: auto; color: #aab8dd; }
+  #log div { padding: 2px 0; border-bottom: 1px solid #1a2440; }
+  .bd-steps { font-size: 13px; margin-top: 6px; }
+  .bd-step-done { color: #5ab4bf; }
+  .bd-step-next { color: #f9d054; font-weight: bold; }
+  .bd-step-todo { color: #55628a; }
+  .bd-env { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+  .bd-env.bd-fire { background: #5c2a1e; color: #ffb199; }
+  .bd-env.bd-ice { background: #1e3a4a; color: #a8e4ff; }
+  .bd-env.bd-none { background: #1a2440; color: #8fa3d0; }
+  .bd-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; }
+  .bd-modal { background: #16203a; border: 1px solid #f9d054; border-radius: 10px; padding: 24px; text-align: center; max-width: 440px; }
+  .bd-modal button { margin: 8px 4px; padding: 8px 18px; border-radius: 6px; border: 1px solid #f9d054; background: #0d1420; color: #f9d054; cursor: pointer; font-size: 15px; }
+  .bd-modal button:hover { background: #f9d054; color: #0d1420; }
+  .bd-hidden { display: none; }
+  .bd-tag { font-size: 11px; background: #1a2440; padding: 2px 8px; border-radius: 8px; margin-left: 6px; }
+  .bd-think { font-size: 12px; color: #5ab4bf; margin-top: 6px; font-style: italic; }
+  .bd-winds { font-size: 13px; margin-top: 4px; color: #5ab4bf; }
+  .bd-compact-badge { font-size: 10px; background: #5ab4bf; color: #0d1420; padding: 1px 6px; border-radius: 6px; margin-left: 4px; font-weight: bold; }</style>
+<div class="bd-panel">
+  <div class="bd-row">
+    <div class="bd-col">
+      <span class="bd-label">FLOOR</span> <span class="bd-big" id="floor">1</span> / 3
+      <span class="bd-tag">仲良し度 <b id="friend">1</b></span>
+      <span class="bd-tag">環境: <span id="envTag" class="bd-env bd-none">通常</span> <span id="envTurns"></span></span>
+    </div>
+  </div>
+</div>
+
+<div class="bd-row">
+  <div class="bd-panel bd-col">
+    <span class="bd-label">ENEMY</span>
+    <div class="bd-chara">
+      <img src="img/hero_bg.png" alt="敵" onerror="this.style.display='none'">
+      <div style="flex:1">
+        <div class="bd-big" id="enemyName">魔物</div>
+        <div class="bd-hpbar"><div id="enemyHpBar"></div></div>
+        <div id="enemyHpText"></div>
+        <div style="font-size:12px;color:#8fa3d0;margin-top:6px;" id="enemyTelegraph"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bd-panel bd-col">
+    <span class="bd-label">PARTNER (オート)</span>
+    <div class="bd-chara">
+      <img src="img/fielia.png" alt="フィーリア">
+      <div style="flex:1">
+        <div class="bd-big">フィーリア</div>
+        <div class="bd-steps" id="partnerSteps"></div>
+        <div style="font-size:12px;color:#f9d054;margin-top:4px;" id="partnerBuff"></div>
+        <div class="bd-winds" id="windCounter"></div>
+        <div class="bd-think" id="heroThink"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bd-panel">
+  <span class="bd-label">PLAYER — 現代知識を持つ主人公</span>
+  <div class="bd-chara">
+    <img src="img/hero2.png" alt="主人公" style="width:64px;height:64px;">
+    <div style="flex:1">
+      <div class="bd-hpbar ally"><div id="playerHpBar"></div></div>
+      <div id="playerHpText"></div>
+      <div style="margin-top:6px;">
+        <span class="bd-tag">エネルギー <b id="energy">3</b>/3</span>
+        <span class="bd-tag">ブロック <b id="block">0</b></span>
+        <span class="bd-tag">山札 <b id="deckCount">0</b>枚</span>
+        <span class="bd-tag">捨札 <b id="discardCount">0</b>枚</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bd-panel">
+  <span class="bd-label">HAND <span style="color:#f9d054">✦ = 今のフィーリアの工程に効くカード</span></span>
+  <div class="bd-row" id="hand" style="margin-top:8px;"></div>
+  <div style="margin-top:12px;">
+    <button class="bd-end" id="endTurnBtn">ターン終了 →</button>
+  </div>
+</div>
+
+<div class="bd-panel">
+  <span class="bd-label">LOG</span>
+  <div id="log"></div>
+</div>
+
+<div class="bd-bd-modal-bg bd-hidden" id="modalBg">
+  <div class="bd-modal" id="modalContent"></div>
+</div>
+    </div>
+  </div>
+</section>
+
 <!-- DEEPEST -->
 
 <section class="deepest reveal" id="deepest">
@@ -592,6 +718,682 @@ requestAnimationFrame(loop)})();
     btn.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
+})();
+</script>
+<script>
+(function(){
+
+/* =====================================================================
+   ① ゲームロジック層(Unity移植対象) — 依存ゼロの純粋データ&関数
+   ===================================================================== */
+
+// ---- カード定義(UnityではScriptableObjectに映射) ----
+const CARDS = {
+  windCompact: { icon:"🌀", name:"圧縮された風", type:"工程圧縮", cost:1, helpsStep:"any", desc:"フィーリアの工程を1つ進める。3枚切るとボーナス攻撃!" },
+  chemFire:    { icon:"🔥", name:"化学変化・燃焼", type:"工程圧縮", cost:1, helpsStep:null, desc:"ステージを2ターン【火】環境に。火魔法は2ターン圧縮&選択率↑" },
+  chemIce:     { icon:"❄️", name:"化学変化・冷却", type:"工程圧縮", cost:1, helpsStep:null, desc:"ステージを2ターン【氷】環境に。氷魔法は2ターン圧縮&選択率↑" },
+  ignite:      { icon:"💥", name:"着火補助", type:"火力増強", cost:1, helpsStep:null, desc:"フィーリアの次の攻撃 +10" },
+  copyBomb:    { icon:"🧨", name:"劣化コピー・爆風", type:"火力増強", cost:1, helpsStep:null, desc:"コピーした能力を正しく運用: 敵に10ダメージ" },
+  guard:       { icon:"🛡️", name:"身を挺する構え", type:"防御", cost:1, helpsStep:null, desc:"ブロック +8(ターン終了まで)" },
+  calc:        { icon:"🧠", name:"冷静な計算", type:"汎用", cost:0, helpsStep:null, desc:"カードを1枚引く" },
+};
+
+// ---- 相方の攻撃シーケンス定義(工程制) ----
+// full: 通常時の工程 / compact: 環境適合時の工程(2ターンに圧縮)
+const SEQUENCES = {
+  fire: { name:"ファイアボール", icon:"🔥", element:"火", dmg:26,
+          full:["風圧縮","着火","ATTACK"], compact:["圧縮","ATTACK"] },
+  ice:  { name:"アイスランス", icon:"🧊", element:"氷", dmg:18,
+          full:["冷却","凝結","ATTACK"], compact:["冷却","ATTACK"] },
+  wind: { name:"ウィンドカッター", icon:"🌪️", element:"風", dmg:12,
+          full:["圧縮","ATTACK"], compact:["圧縮","ATTACK"] },
+};
+
+const OPPOSE = { "火":"氷", "氷":"火", "風":null };
+
+// ---- ゲーム状態 ----
+let S = null;
+
+function newGame() {
+  S = {
+    floor: 1, maxFloor: 3,
+    player: { hp: 50, maxHp: 50, block: 0, energy: 3 },
+    friendship: 1, prefElement: null,
+    env: { element: null, turns: 0 },
+    partner: { name: "フィーリア", seq: null, compact: false, stepIndex: -1, pendingBuff: 0 },
+    enemy: null,
+    deck: [], hand: [], discard: [],
+    over: false, phase: "player",
+  };
+  const starter = [
+    "windCompact","windCompact","windCompact",
+    "chemFire","chemIce",
+    "ignite","ignite",
+    "copyBomb","copyBomb",
+    "guard","guard",
+    "calc","calc",
+  ];
+  S.deck = shuffle(starter.slice());
+  spawnEnemy();
+  chooseNextSequence();
+  drawCards(5);
+}
+
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function spawnEnemy() {
+  S.enemy = { name: "階層の主 " + S.floor, hp: 34 + S.floor * 14, maxHp: 34 + S.floor * 14, atk: 5 + S.floor * 2 };
+}
+
+function drawCards(n) {
+  for (let i = 0; i < n; i++) {
+    if (S.deck.length === 0) { S.deck = shuffle(S.discard.slice()); S.discard = []; if (!S.deck.length) return; }
+    S.hand.push(S.deck.pop());
+  }
+}
+
+// 今の攻撃の工程リスト(compactなら圧縮版)
+function currentSteps() {
+  const p = S.partner;
+  return p.compact ? SEQUENCES[p.seq].compact : SEQUENCES[p.seq].full;
+}
+
+function cardHelpsNow(id) {
+  if (!S.partner.seq) return false;
+  return CARDS[id].helpsStep === "any";
+}
+
+// ---- カード効果 ----
+function playCard(handIndex) {
+  if (S.over || S.phase !== "player") return;
+  const id = S.hand[handIndex];
+  const c = CARDS[id];
+  if (S.player.energy < c.cost) { log("エネルギー不足!"); return; }
+  S.player.energy -= c.cost;
+  S.hand.splice(handIndex, 1);
+  S.discard.push(id);
+
+  switch (id) {
+    case "windCompact": {
+      const p = S.partner;
+      if (!p.seq) { log("フィーリアは次の攻撃を選択中… 工程を進められない"); break; }
+      advancePartnerStep(true); // 工程が進む→ATTACKに届けば即発動→次の攻撃を自動選択
+      break;
+    }
+    case "chemFire": S.env = { element: "火", turns: 2 }; log("🔥 ステージが【火】環境になった(2ターン) — 火魔法は2ターン圧縮&選択率↑"); applyEnvToCurrent(); break;
+    case "chemIce":  S.env = { element: "氷", turns: 2 }; log("❄️ ステージが【氷】環境になった(2ターン) — 氷魔法は2ターン圧縮&選択率↑"); applyEnvToCurrent(); break;
+    case "ignite":   S.partner.pendingBuff += 10; log("💥 着火補助! フィーリアの次の攻撃 +10 (合計+" + S.partner.pendingBuff + ")"); break;
+    case "copyBomb": dealToEnemy(10, "主人公の劣化コピー・爆風"); break;
+    case "guard":    S.player.block += 8; log("🛡️ ブロック +8"); break;
+    case "calc":     drawCards(1); log("🧠 冷静な計算: 1ドロー"); break;
+  }
+  render();
+  checkEnd();
+}
+
+// 環境カードを切った瞬間、今進行中の攻撃にも即適用(適合なら圧縮+工程1つ進行)
+function applyEnvToCurrent() {
+  const p = S.partner;
+  if (!p.seq) return;
+  const el = SEQUENCES[p.seq].element;
+  if (S.env.element && el === S.env.element) {
+    if (!p.compact) {
+      p.compact = true;
+      if (p.stepIndex < 0) {
+        advancePartnerStep(true); // まだ始まってなければ圧縮されて1工程進む
+        log("🌟 環境適合で「" + SEQUENCES[p.seq].name + "」の工程が圧縮され、1つ進んだ!");
+      } else {
+        log("🌟 環境適合で「" + SEQUENCES[p.seq].name + "」の工程が2ターン圧縮に切り替わった!");
+      }
+    }
+  }
+}
+
+// ---- 攻撃発動(主人公の工程圧縮/ターン終了時どちらもここを通る) ----
+function fireCurrentSequence(isPlayerDriven) {
+  const p = S.partner;
+  const seq = SEQUENCES[p.seq];
+  const total = seq.dmg + p.pendingBuff;
+  log((isPlayerDriven ? "🌟【主人公が工程を埋めた!】" : "") + seq.icon + " " + seq.name + " 発動! " + total + "ダメージ" + (p.pendingBuff ? "(基礎" + seq.dmg + "+増強" + p.pendingBuff + ")" : ""));
+  dealToEnemy(total, seq.name);
+  p.pendingBuff = 0;
+  p.seq = null; p.stepIndex = -1; p.compact = false;
+  chooseNextSequence();
+}
+
+// ---- 相方の工程進行 ----
+function advancePartnerStep(byPlayer) {
+  const p = S.partner;
+  const steps = currentSteps();
+  p.stepIndex++;
+  const step = steps[p.stepIndex];
+  if (step === "ATTACK" || step === undefined) {
+    fireCurrentSequence(byPlayer);
+  } else {
+    log((byPlayer ? "🌟【工程圧縮】" : "") + "フィーリアの " + SEQUENCES[p.seq].name + ": 「" + step + "」を消化 (残り" + Math.max(0, steps.length - 1 - p.stepIndex) + "工程)");
+  }
+}
+
+function chooseNextSequence() {
+  const keys = Object.keys(SEQUENCES);
+  const weights = keys.map(k => {
+    let w = 1;
+    const el = SEQUENCES[k].element;
+    if (S.env.element) {
+      if (el === S.env.element) w *= 2.0;
+      if (el === OPPOSE[S.env.element]) w *= 0.3;
+    }
+    if (S.prefElement && el === S.prefElement) w *= 1.5;
+    return w;
+  });
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  let pick = keys[0];
+  for (let i = 0; i < keys.length; i++) { r -= weights[i]; if (r <= 0) { pick = keys[i]; break; } }
+  const el = SEQUENCES[pick].element;
+  const compact = !!S.env.element && el === S.env.element; // 環境適合=2ターン圧縮
+  S.partner.seq = pick; S.partner.compact = compact; S.partner.stepIndex = -1;
+  const pct = Math.round(weights[keys.indexOf(pick)] / total * 100);
+  log("💬 フィーリア「次は" + SEQUENCES[pick].icon + SEQUENCES[pick].name + " いくよ!」 (" + pct + "% / 環境:" + (S.env.element || "通常") + (compact ? " / 【2ターン圧縮!】" : "") + (S.prefElement ? " / 推し:" + S.prefElement : "") + ")");
+}
+
+function dealToEnemy(n, src) {
+  S.enemy.hp = Math.max(0, S.enemy.hp - n);
+  log("→ 敵に " + n + " ダメージ (" + src + ") 残りHP " + S.enemy.hp);
+}
+
+function endTurn() {
+  if (S.over || S.phase !== "player") return;
+  S.phase = "resolve";
+  if (S.partner.seq) { advancePartnerStep(false); }
+  else { chooseNextSequence(); }
+  if (!checkEnd()) {
+    const e = S.enemy;
+    const dmg = e.atk;
+    const blocked = Math.min(S.player.block, dmg);
+    S.player.block -= blocked;
+    S.player.hp = Math.max(0, S.player.hp - (dmg - blocked));
+    log("👹 敵の攻撃! " + dmg + "ダメージ" + (blocked ? " (ブロック" + blocked + "軽減)" : "") + " 残りHP " + S.player.hp);
+    if (S.env.turns > 0) { S.env.turns--; if (S.env.turns === 0) { log("ステージの環境が通常に戻った"); S.env.element = null; } }
+    S.discard.push(...S.hand); S.hand = [];
+    S.player.block = 0;
+    S.player.energy = 3;
+    drawCards(5);
+    log("— 新しいターン —");
+    S.phase = "player";
+    render();
+    checkEnd();
+  }
+  render();
+}
+
+function checkEnd() {
+  if (S.over) return true;
+  if (S.enemy.hp <= 0) {
+    if (S.floor >= S.maxFloor) { S.over = true; showModal("🏆 脱出成功!", "全" + S.maxFloor + "階層を制覇した!",
+      [["もう一回遊ぶ", () => { hideModal(); newGame(); render(); }]]); return true; }
+    S.floor++;
+    S.friendship++;
+    S.player.hp = Math.min(S.player.maxHp, S.player.hp + 12);
+    log("階層クリア! 仲良し度が上がった (" + S.friendship + ") HP+12回復");
+    askPreference();
+    return true;
+  }
+  if (S.player.hp <= 0) {
+    S.over = true;
+    showModal("💀 ゲームオーバー", "地上には届かなかった…",
+      [["再挑戦", () => { hideModal(); newGame(); render(); }]]); return true;
+  }
+  return false;
+}
+
+function askPreference() {
+  const btns = ["火", "氷", "風"].map(el =>
+    [SEQUENCES[{ "火":"fire", "氷":"ice", "風":"wind" }[el]].icon + " " + el + "を推す (選択率×1.5)", () => { S.prefElement = el; hideModal(); spawnEnemy(); S.partner.seq = null; S.discard.push(...S.hand); S.hand = []; chooseNextSequence(); drawCards(5); log("💕 フィーリアとの仲良し度が深まった! 【" + el + "】を推すことにした"); render(); }]
+  );
+  showModal("💕 仲良し度アップ!", "フィーリアとの絆が深まった。<br>次の階層から、相方の攻撃の選択率を調整できる。<br>どの属性を推す?", btns);
+}
+
+/* =====================================================================
+   ② UI層(Unity移植対象外 — 表示だけ)
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+
+function log(t) { const d = document.createElement("div"); d.textContent = t; $("log").prepend(d); }
+
+function render() {
+  $("floor").textContent = S.floor;
+  $("friend").textContent = S.friendship;
+  const envTag = $("envTag");
+  envTag.className = "env " + (S.env.element ? (S.env.element === "火" ? "fire" : "ice") : "none");
+  envTag.textContent = S.env.element ? S.env.element + "環境" : "通常";
+  $("envTurns").textContent = S.env.turns > 0 ? "残り" + S.env.turns + "T" : "";
+
+  $("enemyName").textContent = S.enemy.name;
+  $("enemyHpBar").style.width = (S.enemy.hp / S.enemy.maxHp * 100) + "%";
+  $("enemyHpText").textContent = "HP " + S.enemy.hp + " / " + S.enemy.maxHp;
+  $("enemyTelegraph").textContent = "次のターンの敵攻撃: " + S.enemy.atk + "ダメージ";
+
+  const ps = $("partnerSteps");
+  if (S.partner.seq) {
+    const seq = SEQUENCES[S.partner.seq];
+    const steps = currentSteps();
+    let html = "<b style='color:#b93cd8'>" + seq.icon + " " + seq.name + "</b> (" + seq.element + "・" + seq.dmg + "dmg)" + (S.partner.compact ? "<span class='bd-compact-badge'>2ターン圧縮</span>" : "") + "<br>";
+    html += steps.map((st, i) => {
+      if (st === "ATTACK") st = "⚡攻撃発動";
+      if (i < S.partner.stepIndex) return "<span class='bd-step-done'>✓" + st + "</span>";
+      if (i === S.partner.stepIndex + 1) return "<span class='bd-step-next'>▶" + st + "</span>";
+      return "<span class='bd-step-todo'>" + st + "</span>";
+    }).join(" → ");
+    ps.innerHTML = html;
+  } else {
+    ps.innerHTML = "<span class='bd-step-todo'>次の攻撃を選択中…</span>";
+  }
+  $("partnerBuff").textContent = S.partner.pendingBuff > 0 ? "💥 火力増強: 次の攻撃 +" + S.partner.pendingBuff : "";
+
+  // 工程ガイド(代替表示): 環境適合なら工程1つ進んだ状態から
+  const wc = $("windCounter");
+  if (S.partner.seq) {
+    const steps = currentSteps();
+    const remain = Math.max(0, steps.length - 1 - (S.partner.stepIndex + 1));
+    wc.textContent = "📌 工程ガイド: 「圧縮された風」を切るたび工程が進む。残り" + remain + "工程で「" + SEQUENCES[S.partner.seq].name + "」発動。連続で切れば1ターンに複数回攻撃も可能!";
+  } else {
+    wc.textContent = "";
+  }
+
+  const think = $("heroThink");
+  if (S.partner.seq) {
+    const seq = SEQUENCES[S.partner.seq];
+    const steps = currentSteps();
+    const remain = Math.max(0, steps.length - 1 - (S.partner.stepIndex + 1));
+    if (S.hand.includes("windCompact")) {
+      think.textContent = "🧠 読み: 「圧縮された風」で工程が1つ進む(残り" + remain + "工程" + (remain <= 1 ? " → 発動圏内!)" : ")");
+    } else if (S.partner.pendingBuff > 0) {
+      think.textContent = "🧠 読み: 増強+" + S.partner.pendingBuff + "は溜まった。後は工程を進めるだけ";
+    } else {
+      think.textContent = "🧠 読み: 手札に工程圧縮がない… 火力増強か防御で繋ごう";
+    }
+  } else {
+    think.textContent = "";
+  }
+
+  $("playerHpBar").style.width = (S.player.hp / S.player.maxHp * 100) + "%";
+  $("playerHpText").textContent = "HP " + S.player.hp + " / " + S.player.maxHp;
+  $("energy").textContent = S.player.energy;
+  $("block").textContent = S.player.block;
+  $("deckCount").textContent = S.deck.length;
+  $("discardCount").textContent = S.discard.length;
+
+  const hand = $("hand"); hand.innerHTML = "";
+  S.hand.forEach((id, i) => {
+    const c = CARDS[id];
+    const div = document.createElement("div");
+    const helps = cardHelpsNow(id);
+    div.className = "bd-card" + (S.player.energy < c.cost ? " bd-disabled" : "") + (helps ? " bd-helps" : "");
+    div.innerHTML = "<div class='bd-icon'>" + c.icon + (helps ? "<span class='bd-hint'>✦</span>" : "") + "</div><div class='bd-name'>" + c.name + "</div><div class='bd-cost'>⚡" + c.cost + " <span class='bd-type'>" + c.type + "</span></div><div class='bd-desc'>" + c.desc + "</div>";
+    div.onclick = () => playCard(i);
+    hand.appendChild(div);
+  });
+  $("endTurnBtn").disabled = S.over;
+  $("endTurnBtn").style.opacity = S.over ? .4 : 1;
+}
+
+function showModal(title, body, buttons) {
+  const m = $("modalContent");
+  m.innerHTML = "<h2 style='color:#f9d054;margin-bottom:12px;'>" + title + "</h2><div style='margin-bottom:12px;'>" + body + "</div>";
+  buttons.forEach(([label, fn]) => {
+    const b = document.createElement("button");
+    b.textContent = label; b.onclick = fn;
+    m.appendChild(b);
+  });
+  $("modalBg").classList.remove("bd-hidden");
+}
+function hideModal() { $("modalBg").classList.add("bd-hidden"); }
+
+$("endTurnBtn").onclick = endTurn;
+
+newGame();
+render();
+log("v0.3: 環境適合攻撃は2ターンに圧縮! 圧縮された風3枚でボーナス攻撃!");
+
+})();
+</script>
+<script>
+(function(){
+
+/* =====================================================================
+   ① ゲームロジック層(Unity移植対象) — 依存ゼロの純粋データ&関数
+   ===================================================================== */
+
+// ---- カード定義(UnityではScriptableObjectに映射) ----
+const CARDS = {
+  windCompact: { icon:"🌀", name:"圧縮された風", type:"工程圧縮", cost:1, helpsStep:"any", desc:"フィーリアの工程を1つ進める。3枚切るとボーナス攻撃!" },
+  chemFire:    { icon:"🔥", name:"化学変化・燃焼", type:"工程圧縮", cost:1, helpsStep:null, desc:"ステージを2ターン【火】環境に。火魔法は2ターン圧縮&選択率↑" },
+  chemIce:     { icon:"❄️", name:"化学変化・冷却", type:"工程圧縮", cost:1, helpsStep:null, desc:"ステージを2ターン【氷】環境に。氷魔法は2ターン圧縮&選択率↑" },
+  ignite:      { icon:"💥", name:"着火補助", type:"火力増強", cost:1, helpsStep:null, desc:"フィーリアの次の攻撃 +10" },
+  copyBomb:    { icon:"🧨", name:"劣化コピー・爆風", type:"火力増強", cost:1, helpsStep:null, desc:"コピーした能力を正しく運用: 敵に10ダメージ" },
+  guard:       { icon:"🛡️", name:"身を挺する構え", type:"防御", cost:1, helpsStep:null, desc:"ブロック +8(ターン終了まで)" },
+  calc:        { icon:"🧠", name:"冷静な計算", type:"汎用", cost:0, helpsStep:null, desc:"カードを1枚引く" },
+};
+
+// ---- 相方の攻撃シーケンス定義(工程制) ----
+// full: 通常時の工程 / compact: 環境適合時の工程(2ターンに圧縮)
+const SEQUENCES = {
+  fire: { name:"ファイアボール", icon:"🔥", element:"火", dmg:26,
+          full:["風圧縮","着火","ATTACK"], compact:["圧縮","ATTACK"] },
+  ice:  { name:"アイスランス", icon:"🧊", element:"氷", dmg:18,
+          full:["冷却","凝結","ATTACK"], compact:["冷却","ATTACK"] },
+  wind: { name:"ウィンドカッター", icon:"🌪️", element:"風", dmg:12,
+          full:["圧縮","ATTACK"], compact:["圧縮","ATTACK"] },
+};
+
+const OPPOSE = { "火":"氷", "氷":"火", "風":null };
+
+// ---- ゲーム状態 ----
+let S = null;
+
+function newGame() {
+  S = {
+    floor: 1, maxFloor: 3,
+    player: { hp: 50, maxHp: 50, block: 0, energy: 3 },
+    friendship: 1, prefElement: null,
+    env: { element: null, turns: 0 },
+    partner: { name: "フィーリア", seq: null, compact: false, stepIndex: -1, pendingBuff: 0 },
+    enemy: null,
+    deck: [], hand: [], discard: [],
+    over: false, phase: "player",
+  };
+  const starter = [
+    "windCompact","windCompact","windCompact",
+    "chemFire","chemIce",
+    "ignite","ignite",
+    "copyBomb","copyBomb",
+    "guard","guard",
+    "calc","calc",
+  ];
+  S.deck = shuffle(starter.slice());
+  spawnEnemy();
+  chooseNextSequence();
+  drawCards(5);
+}
+
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function spawnEnemy() {
+  S.enemy = { name: "階層の主 " + S.floor, hp: 34 + S.floor * 14, maxHp: 34 + S.floor * 14, atk: 5 + S.floor * 2 };
+}
+
+function drawCards(n) {
+  for (let i = 0; i < n; i++) {
+    if (S.deck.length === 0) { S.deck = shuffle(S.discard.slice()); S.discard = []; if (!S.deck.length) return; }
+    S.hand.push(S.deck.pop());
+  }
+}
+
+// 今の攻撃の工程リスト(compactなら圧縮版)
+function currentSteps() {
+  const p = S.partner;
+  return p.compact ? SEQUENCES[p.seq].compact : SEQUENCES[p.seq].full;
+}
+
+function cardHelpsNow(id) {
+  if (!S.partner.seq) return false;
+  return CARDS[id].helpsStep === "any";
+}
+
+// ---- カード効果 ----
+function playCard(handIndex) {
+  if (S.over || S.phase !== "player") return;
+  const id = S.hand[handIndex];
+  const c = CARDS[id];
+  if (S.player.energy < c.cost) { log("エネルギー不足!"); return; }
+  S.player.energy -= c.cost;
+  S.hand.splice(handIndex, 1);
+  S.discard.push(id);
+
+  switch (id) {
+    case "windCompact": {
+      const p = S.partner;
+      if (!p.seq) { log("フィーリアは次の攻撃を選択中… 工程を進められない"); break; }
+      advancePartnerStep(true); // 工程が進む→ATTACKに届けば即発動→次の攻撃を自動選択
+      break;
+    }
+    case "chemFire": S.env = { element: "火", turns: 2 }; log("🔥 ステージが【火】環境になった(2ターン) — 火魔法は2ターン圧縮&選択率↑"); applyEnvToCurrent(); break;
+    case "chemIce":  S.env = { element: "氷", turns: 2 }; log("❄️ ステージが【氷】環境になった(2ターン) — 氷魔法は2ターン圧縮&選択率↑"); applyEnvToCurrent(); break;
+    case "ignite":   S.partner.pendingBuff += 10; log("💥 着火補助! フィーリアの次の攻撃 +10 (合計+" + S.partner.pendingBuff + ")"); break;
+    case "copyBomb": dealToEnemy(10, "主人公の劣化コピー・爆風"); break;
+    case "guard":    S.player.block += 8; log("🛡️ ブロック +8"); break;
+    case "calc":     drawCards(1); log("🧠 冷静な計算: 1ドロー"); break;
+  }
+  render();
+  checkEnd();
+}
+
+// 環境カードを切った瞬間、今進行中の攻撃にも即適用(適合なら圧縮+工程1つ進行)
+function applyEnvToCurrent() {
+  const p = S.partner;
+  if (!p.seq) return;
+  const el = SEQUENCES[p.seq].element;
+  if (S.env.element && el === S.env.element) {
+    if (!p.compact) {
+      p.compact = true;
+      if (p.stepIndex < 0) {
+        advancePartnerStep(true); // まだ始まってなければ圧縮されて1工程進む
+        log("🌟 環境適合で「" + SEQUENCES[p.seq].name + "」の工程が圧縮され、1つ進んだ!");
+      } else {
+        log("🌟 環境適合で「" + SEQUENCES[p.seq].name + "」の工程が2ターン圧縮に切り替わった!");
+      }
+    }
+  }
+}
+
+// ---- 攻撃発動(主人公の工程圧縮/ターン終了時どちらもここを通る) ----
+function fireCurrentSequence(isPlayerDriven) {
+  const p = S.partner;
+  const seq = SEQUENCES[p.seq];
+  const total = seq.dmg + p.pendingBuff;
+  log((isPlayerDriven ? "🌟【主人公が工程を埋めた!】" : "") + seq.icon + " " + seq.name + " 発動! " + total + "ダメージ" + (p.pendingBuff ? "(基礎" + seq.dmg + "+増強" + p.pendingBuff + ")" : ""));
+  dealToEnemy(total, seq.name);
+  p.pendingBuff = 0;
+  p.seq = null; p.stepIndex = -1; p.compact = false;
+  chooseNextSequence();
+}
+
+// ---- 相方の工程進行 ----
+function advancePartnerStep(byPlayer) {
+  const p = S.partner;
+  const steps = currentSteps();
+  p.stepIndex++;
+  const step = steps[p.stepIndex];
+  if (step === "ATTACK" || step === undefined) {
+    fireCurrentSequence(byPlayer);
+  } else {
+    log((byPlayer ? "🌟【工程圧縮】" : "") + "フィーリアの " + SEQUENCES[p.seq].name + ": 「" + step + "」を消化 (残り" + Math.max(0, steps.length - 1 - p.stepIndex) + "工程)");
+  }
+}
+
+function chooseNextSequence() {
+  const keys = Object.keys(SEQUENCES);
+  const weights = keys.map(k => {
+    let w = 1;
+    const el = SEQUENCES[k].element;
+    if (S.env.element) {
+      if (el === S.env.element) w *= 2.0;
+      if (el === OPPOSE[S.env.element]) w *= 0.3;
+    }
+    if (S.prefElement && el === S.prefElement) w *= 1.5;
+    return w;
+  });
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  let pick = keys[0];
+  for (let i = 0; i < keys.length; i++) { r -= weights[i]; if (r <= 0) { pick = keys[i]; break; } }
+  const el = SEQUENCES[pick].element;
+  const compact = !!S.env.element && el === S.env.element; // 環境適合=2ターン圧縮
+  S.partner.seq = pick; S.partner.compact = compact; S.partner.stepIndex = -1;
+  const pct = Math.round(weights[keys.indexOf(pick)] / total * 100);
+  log("💬 フィーリア「次は" + SEQUENCES[pick].icon + SEQUENCES[pick].name + " いくよ!」 (" + pct + "% / 環境:" + (S.env.element || "通常") + (compact ? " / 【2ターン圧縮!】" : "") + (S.prefElement ? " / 推し:" + S.prefElement : "") + ")");
+}
+
+function dealToEnemy(n, src) {
+  S.enemy.hp = Math.max(0, S.enemy.hp - n);
+  log("→ 敵に " + n + " ダメージ (" + src + ") 残りHP " + S.enemy.hp);
+}
+
+function endTurn() {
+  if (S.over || S.phase !== "player") return;
+  S.phase = "resolve";
+  if (S.partner.seq) { advancePartnerStep(false); }
+  else { chooseNextSequence(); }
+  if (!checkEnd()) {
+    const e = S.enemy;
+    const dmg = e.atk;
+    const blocked = Math.min(S.player.block, dmg);
+    S.player.block -= blocked;
+    S.player.hp = Math.max(0, S.player.hp - (dmg - blocked));
+    log("👹 敵の攻撃! " + dmg + "ダメージ" + (blocked ? " (ブロック" + blocked + "軽減)" : "") + " 残りHP " + S.player.hp);
+    if (S.env.turns > 0) { S.env.turns--; if (S.env.turns === 0) { log("ステージの環境が通常に戻った"); S.env.element = null; } }
+    S.discard.push(...S.hand); S.hand = [];
+    S.player.block = 0;
+    S.player.energy = 3;
+    drawCards(5);
+    log("— 新しいターン —");
+    S.phase = "player";
+    render();
+    checkEnd();
+  }
+  render();
+}
+
+function checkEnd() {
+  if (S.over) return true;
+  if (S.enemy.hp <= 0) {
+    if (S.floor >= S.maxFloor) { S.over = true; showModal("🏆 脱出成功!", "全" + S.maxFloor + "階層を制覇した!",
+      [["もう一回遊ぶ", () => { hideModal(); newGame(); render(); }]]); return true; }
+    S.floor++;
+    S.friendship++;
+    S.player.hp = Math.min(S.player.maxHp, S.player.hp + 12);
+    log("階層クリア! 仲良し度が上がった (" + S.friendship + ") HP+12回復");
+    askPreference();
+    return true;
+  }
+  if (S.player.hp <= 0) {
+    S.over = true;
+    showModal("💀 ゲームオーバー", "地上には届かなかった…",
+      [["再挑戦", () => { hideModal(); newGame(); render(); }]]); return true;
+  }
+  return false;
+}
+
+function askPreference() {
+  const btns = ["火", "氷", "風"].map(el =>
+    [SEQUENCES[{ "火":"fire", "氷":"ice", "風":"wind" }[el]].icon + " " + el + "を推す (選択率×1.5)", () => { S.prefElement = el; hideModal(); spawnEnemy(); S.partner.seq = null; S.discard.push(...S.hand); S.hand = []; chooseNextSequence(); drawCards(5); log("💕 フィーリアとの仲良し度が深まった! 【" + el + "】を推すことにした"); render(); }]
+  );
+  showModal("💕 仲良し度アップ!", "フィーリアとの絆が深まった。<br>次の階層から、相方の攻撃の選択率を調整できる。<br>どの属性を推す?", btns);
+}
+
+/* =====================================================================
+   ② UI層(Unity移植対象外 — 表示だけ)
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+
+function log(t) { const d = document.createElement("div"); d.textContent = t; $("log").prepend(d); }
+
+function render() {
+  $("floor").textContent = S.floor;
+  $("friend").textContent = S.friendship;
+  const envTag = $("envTag");
+  envTag.className = "env " + (S.env.element ? (S.env.element === "火" ? "fire" : "ice") : "none");
+  envTag.textContent = S.env.element ? S.env.element + "環境" : "通常";
+  $("envTurns").textContent = S.env.turns > 0 ? "残り" + S.env.turns + "T" : "";
+
+  $("enemyName").textContent = S.enemy.name;
+  $("enemyHpBar").style.width = (S.enemy.hp / S.enemy.maxHp * 100) + "%";
+  $("enemyHpText").textContent = "HP " + S.enemy.hp + " / " + S.enemy.maxHp;
+  $("enemyTelegraph").textContent = "次のターンの敵攻撃: " + S.enemy.atk + "ダメージ";
+
+  const ps = $("partnerSteps");
+  if (S.partner.seq) {
+    const seq = SEQUENCES[S.partner.seq];
+    const steps = currentSteps();
+    let html = "<b style='color:#b93cd8'>" + seq.icon + " " + seq.name + "</b> (" + seq.element + "・" + seq.dmg + "dmg)" + (S.partner.compact ? "<span class='bd-compact-badge'>2ターン圧縮</span>" : "") + "<br>";
+    html += steps.map((st, i) => {
+      if (st === "ATTACK") st = "⚡攻撃発動";
+      if (i < S.partner.stepIndex) return "<span class='bd-step-done'>✓" + st + "</span>";
+      if (i === S.partner.stepIndex + 1) return "<span class='bd-step-next'>▶" + st + "</span>";
+      return "<span class='bd-step-todo'>" + st + "</span>";
+    }).join(" → ");
+    ps.innerHTML = html;
+  } else {
+    ps.innerHTML = "<span class='bd-step-todo'>次の攻撃を選択中…</span>";
+  }
+  $("partnerBuff").textContent = S.partner.pendingBuff > 0 ? "💥 火力増強: 次の攻撃 +" + S.partner.pendingBuff : "";
+
+  // 工程ガイド(代替表示): 環境適合なら工程1つ進んだ状態から
+  const wc = $("windCounter");
+  if (S.partner.seq) {
+    const steps = currentSteps();
+    const remain = Math.max(0, steps.length - 1 - (S.partner.stepIndex + 1));
+    wc.textContent = "📌 工程ガイド: 「圧縮された風」を切るたび工程が進む。残り" + remain + "工程で「" + SEQUENCES[S.partner.seq].name + "」発動。連続で切れば1ターンに複数回攻撃も可能!";
+  } else {
+    wc.textContent = "";
+  }
+
+  const think = $("heroThink");
+  if (S.partner.seq) {
+    const seq = SEQUENCES[S.partner.seq];
+    const steps = currentSteps();
+    const remain = Math.max(0, steps.length - 1 - (S.partner.stepIndex + 1));
+    if (S.hand.includes("windCompact")) {
+      think.textContent = "🧠 読み: 「圧縮された風」で工程が1つ進む(残り" + remain + "工程" + (remain <= 1 ? " → 発動圏内!)" : ")");
+    } else if (S.partner.pendingBuff > 0) {
+      think.textContent = "🧠 読み: 増強+" + S.partner.pendingBuff + "は溜まった。後は工程を進めるだけ";
+    } else {
+      think.textContent = "🧠 読み: 手札に工程圧縮がない… 火力増強か防御で繋ごう";
+    }
+  } else {
+    think.textContent = "";
+  }
+
+  $("playerHpBar").style.width = (S.player.hp / S.player.maxHp * 100) + "%";
+  $("playerHpText").textContent = "HP " + S.player.hp + " / " + S.player.maxHp;
+  $("energy").textContent = S.player.energy;
+  $("block").textContent = S.player.block;
+  $("deckCount").textContent = S.deck.length;
+  $("discardCount").textContent = S.discard.length;
+
+  const hand = $("hand"); hand.innerHTML = "";
+  S.hand.forEach((id, i) => {
+    const c = CARDS[id];
+    const div = document.createElement("div");
+    const helps = cardHelpsNow(id);
+    div.className = "bd-card" + (S.player.energy < c.cost ? " bd-disabled" : "") + (helps ? " bd-helps" : "");
+    div.innerHTML = "<div class='bd-icon'>" + c.icon + (helps ? "<span class='bd-hint'>✦</span>" : "") + "</div><div class='bd-name'>" + c.name + "</div><div class='bd-cost'>⚡" + c.cost + " <span class='bd-type'>" + c.type + "</span></div><div class='bd-desc'>" + c.desc + "</div>";
+    div.onclick = () => playCard(i);
+    hand.appendChild(div);
+  });
+  $("endTurnBtn").disabled = S.over;
+  $("endTurnBtn").style.opacity = S.over ? .4 : 1;
+}
+
+function showModal(title, body, buttons) {
+  const m = $("modalContent");
+  m.innerHTML = "<h2 style='color:#f9d054;margin-bottom:12px;'>" + title + "</h2><div style='margin-bottom:12px;'>" + body + "</div>";
+  buttons.forEach(([label, fn]) => {
+    const b = document.createElement("button");
+    b.textContent = label; b.onclick = fn;
+    m.appendChild(b);
+  });
+  $("modalBg").classList.remove("bd-hidden");
+}
+function hideModal() { $("modalBg").classList.add("bd-hidden"); }
+
+$("endTurnBtn").onclick = endTurn;
+
+newGame();
+render();
+log("v0.3: 環境適合攻撃は2ターンに圧縮! 圧縮された風3枚でボーナス攻撃!");
+
 })();
 </script>
 </body>
