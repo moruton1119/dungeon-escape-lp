@@ -308,9 +308,9 @@ h2.big{
 
 /* ===== StS-style battle demo ===== */
 .sts{position:relative;margin-top:18px}
-.sts-field{position:relative;border-radius:14px;overflow:hidden;min-height:420px;border:1px solid rgba(249,208,84,.25)}
-.sts-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.72)}
-.sts-topbar{position:relative;z-index:2;display:flex;gap:10px;align-items:center;padding:10px 14px;flex-wrap:wrap}
+.sts-field{position:relative;border-radius:14px;overflow:hidden;min-height:460px;border:1px solid rgba(249,208,84,.25);display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:66px 16px 52px;align-items:center}
+.sts-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62)}
+.sts-topbar{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;gap:10px;align-items:center;padding:8px 14px;flex-wrap:wrap;background:rgba(13,20,32,.82);border-bottom:1px solid rgba(138,163,208,.25)}
 .sts-floor{font-weight:900;font-size:18px;color:var(--gold);letter-spacing:.1em}
 .sts-sub{font-size:11px;color:rgba(243,236,220,.6);font-weight:700}
 .sts-chip{font-size:12px;font-weight:700;background:rgba(13,20,32,.72);border:1px solid rgba(138,163,208,.35);padding:3px 10px;border-radius:12px;color:#e8eaf6}
@@ -319,9 +319,9 @@ h2.big{
 .bd-env.bd-fire{background:#5c2a1e;color:#ffb199}
 .bd-env.bd-ice{background:#1e3a4a;color:#a8e4ff}
 .bd-env.bd-none{background:#1a2440;color:#8fa3d0}
-.sts-enemy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;margin-top:-4px}
-.sts-boss{width:150px;height:150px;object-fit:cover;border-radius:12px;border:2px solid rgba(178,88,79,.8);box-shadow:0 0 24px rgba(178,88,79,.35)}
-.sts-hpwrap{width:min(320px,86%);text-align:center;margin-top:6px}
+.sts-enemy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sts-boss{width:min(240px,60%);aspect-ratio:1;object-fit:cover;border-radius:14px;border:2px solid rgba(178,88,79,.8);box-shadow:0 0 28px rgba(178,88,79,.35)}
+.sts-hpwrap{width:min(340px,92%);text-align:center;margin-top:8px;background:rgba(13,20,32,.82);border:1px solid rgba(138,163,208,.25);border-radius:10px;padding:8px 10px}
 .sts-hpwrap.enemy .sts-hpbar{margin-top:4px}
 .sts-name{font-weight:900;font-size:15px;color:#f3ecdc;text-shadow:0 1px 4px #000}
 .sts-name.gold{color:var(--gold)}
@@ -330,8 +330,8 @@ h2.big{
 .sts-hpbar.ally>div{background:linear-gradient(90deg,#4a9aa4,#5ab4bf)}
 .sts-hptext{font-size:11px;color:rgba(243,236,220,.85);margin-top:2px;font-weight:700}
 .sts-tele{font-size:11px;color:#e8b6b0;margin-top:2px;font-weight:700}
-.sts-allies{position:relative;z-index:2;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px;padding:0 12px}
-.sts-ally{display:flex;gap:10px;background:rgba(13,20,32,.68);border:1px solid rgba(138,163,208,.25);border-radius:12px;padding:10px;min-width:250px;flex:1;max-width:420px}
+.sts-allies{position:relative;z-index:2;display:flex;flex-direction:column;gap:12px}
+.sts-ally{display:flex;gap:10px;background:rgba(13,20,32,.84);border:1px solid rgba(138,163,208,.3);border-radius:12px;padding:10px 12px}
 .sts-portrait{width:70px;height:70px;object-fit:cover;object-position:top;border-radius:10px;border:2px solid #3d5a96}
 .sts-portrait.hero{border-color:rgba(249,208,84,.6)}
 .sts-allyinfo{flex:1;min-width:0}
@@ -373,10 +373,11 @@ h2.big{
 .bd-modal button:hover{background:var(--gold);color:#0d1420}
 .bd-hidden{display:none}
 @media(max-width:700px){
+  .sts-field{grid-template-columns:1fr;padding-top:120px}
   .sts-hand{min-height:150px}
   .bd-card{width:96px;margin:0 -9px}
   .bd-card .bd-desc{display:none}
-  .sts-boss{width:110px;height:110px}
+  .sts-boss{width:140px}
   .sts-ally{min-width:0;width:100%}
 }
 /* ===== deepest: dark gag ===== */
@@ -591,16 +592,6 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
           <span class="sts-chip">環境 <span id="envTag" class="bd-env bd-none">通常</span> <span id="envTurns" class="sts-sub"></span></span>
         </div>
 
-        <div class="sts-enemy">
-          <img class="sts-boss" id="bossImg" src="img/boss1.png" alt="敵">
-          <div class="sts-hpwrap enemy">
-            <div class="sts-name" id="enemyName">魔物</div>
-            <div class="sts-hpbar"><div id="enemyHpBar"></div></div>
-            <div class="sts-hptext" id="enemyHpText"></div>
-            <div class="sts-tele" id="enemyTelegraph"></div>
-          </div>
-        </div>
-
         <div class="sts-allies">
           <div class="sts-ally">
             <img class="sts-portrait" src="img/fielia.png" alt="フィーリア">
@@ -624,6 +615,16 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
                 <span class="sts-chip">捨札 <b id="discardCount">0</b></span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="sts-enemy">
+          <img class="sts-boss" id="bossImg" src="img/boss1.png" alt="敵">
+          <div class="sts-hpwrap enemy">
+            <div class="sts-name" id="enemyName">魔物</div>
+            <div class="sts-hpbar"><div id="enemyHpBar"></div></div>
+            <div class="sts-hptext" id="enemyHpText"></div>
+            <div class="sts-tele" id="enemyTelegraph"></div>
           </div>
         </div>
 
