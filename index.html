@@ -73,12 +73,12 @@ nav a:hover{opacity:1;color:var(--gold)}
 }
 .hero-bgfix{
   position:fixed;inset:0;z-index:-1;
-  background:url(img/hero2.png) center 35%/cover no-repeat #0d1420;
 }
-.hero::after{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(13,20,32,.62),rgba(13,20,32,.18) 42%,rgba(13,20,32,.66));
+.hero-bgfix::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(13,20,32,.62),rgba(13,20,32,.30) 42%,rgba(13,20,32,.62));
 }
+.hero-bgfix .bgi{position:absolute;inset:0;background:url(img/hero2.png) center 35%/cover no-repeat #0d1420;}
 .hero>*{position:relative;z-index:1}
 .hero .eyebrow{
   font-weight:900;color:var(--gold);letter-spacing:.35em;font-size:14px;margin-bottom:22px;
@@ -127,11 +127,10 @@ h2.big{
 
 /* headline cards */
 .headline-card{
-  background:rgba(255,255,255,.6);border:1px solid rgba(80,95,150,.3);border-radius:16px;
+  background:rgba(255,255,255,.82);border:1px solid rgba(80,95,150,.3);border-radius:16px;
   padding:34px 34px 30px;max-width:820px;margin:14px auto 10px;
   box-shadow:0 8px 30px rgba(13,20,32,.12);
-  backdrop-filter:blur(6px);
-}
+  }
 .headline-card .big{margin-bottom:26px}
 .headline-card .kicker{margin-bottom:18px}
 .headline-card .kicker.dark{background:rgba(249,208,84,.14)}
@@ -215,16 +214,15 @@ h2.big{
 }
 /* full-section cards */
 .section-card{
-  background:rgba(13,20,32,.66);border:1px solid rgba(249,208,84,.28);border-radius:20px;
+  background:rgba(13,20,32,.86);border:1px solid rgba(249,208,84,.28);border-radius:20px;
   padding:44px 38px 48px;max-width:1180px;margin:14px auto 10px;
   box-shadow:0 10px 40px rgba(0,0,0,.42);
-  backdrop-filter:blur(6px);
-}
+  }
 .section-card .kicker{margin-bottom:18px}
 .section-card .big{margin-bottom:34px}
 .section-card h2.big{color:var(--lavender)}
 .section-card.light{
-  background:rgba(255,255,255,.6);border:1px solid rgba(80,95,150,.3);
+  background:rgba(255,255,255,.82);border:1px solid rgba(80,95,150,.3);
   box-shadow:0 8px 30px rgba(13,20,32,.12);
 }
 .section-card.light h2.big{color:var(--indigo)}
@@ -362,7 +360,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 </div>
 
 <!-- HERO -->
-<div class="hero-bgfix" aria-hidden="true"></div>
+<div class="hero-bgfix" aria-hidden="true"><div class="bgi"></div></div>
 <section class="hero">
   <div class="eyebrow">架空カードバトルローグライク</div>
   <h1>この相方、世界<span class="accent">最強</span><br>だけど<span class="accent">制御不能</span>。</h1>
