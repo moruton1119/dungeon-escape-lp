@@ -76,7 +76,12 @@ nav a:hover{opacity:1;color:var(--gold)}
 }
 .hero-bgfix::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(13,20,32,.62),rgba(13,20,32,.30) 42%,rgba(13,20,32,.62));
+  background:linear-gradient(180deg,
+    rgba(13,20,32,.58) 0%,
+    rgba(13,20,32,.22) 34%,
+    rgba(13,20,32,.55) 55%,
+    rgba(13,20,32,.97) 78%,
+    #0d1420 100%);
 }
 .hero-bgfix .bgi{position:absolute;inset:0;background:url(img/hero2.png) center 35%/cover no-repeat #0d1420;}
 .hero>*{position:relative;z-index:1}
