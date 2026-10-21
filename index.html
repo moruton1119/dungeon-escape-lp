@@ -306,6 +306,10 @@ h2.big{
 .story-body.open{max-height:1200px;opacity:1;margin-top:44px}
 .story-body p{margin:0 0 20px}
 
+
+/* ===== demo play button ===== */
+.demo-play-btn{display:block;margin:26px auto 0;padding:18px 64px;font-size:22px;font-weight:900;letter-spacing:.08em;color:#f3ecdc;background:linear-gradient(180deg,#8f2fb0,#6535c9);border:2px solid rgba(249,208,84,.7);border-radius:14px;cursor:pointer;box-shadow:0 8px 28px rgba(101,53,201,.5);transition:transform .15s,box-shadow .15s}
+.demo-play-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 36px rgba(101,53,201,.65)}
 /* ===== StS-style battle demo ===== */
 .sts{position:relative;margin-top:18px}
 .sts-field{position:relative;border-radius:14px;overflow:hidden;min-height:460px;border:1px solid rgba(249,208,84,.25);display:flex;flex-direction:column;gap:12px;padding:56px 16px 52px;align-items:center}
@@ -424,7 +428,6 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 <canvas class="dust" id="dust"></canvas>
 
 <header>
-  <div class="logo"><span class="num">100</span> DUNGEON ESCAPE</div>
   <nav>
     <ul>
       <li><a href="#story">STORY</a></li>
@@ -586,7 +589,8 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
     <h2 class="big">3エネルギーで、工程を縮めろ。</h2>
     <div class="demo-note">戦闘システムのプロトタイプ。相方は工程制で攻撃を選び、主人公のカードが工程を圧縮・火力を増幅する。</div>
 
-    <div class="sts">
+    <button class="demo-play-btn" id="demoPlayBtn">▶ デモプレイ</button>
+    <div class="sts bd-hidden" id="demoWrap">
       <div class="sts-field">
         <img class="sts-bg" src="img/demo_bg.png" alt="">
         <div class="sts-topbar">
@@ -668,7 +672,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
   <div class="fline reveal">最強は、二人で初めて完成する。</div>
 
-  <a class="btn reveal" href="#">4/1、最深部から帰還せよ。</a>
+  <a class="btn reveal" href="#demo">デモをプレイする。</a>
 
   <div class="date reveal">DUNGEON ESCAPE — RELEASE 未定（架空です）</div>
 
@@ -1095,6 +1099,16 @@ function showModal(title, body, buttons) {
 function hideModal() { $("modalBg").classList.add("bd-hidden"); }
 
 $("endTurnBtn").onclick = endTurn;
+
+(function(){
+  const btn = document.getElementById("demoPlayBtn");
+  const wrap = document.getElementById("demoWrap");
+  if (btn && wrap) btn.onclick = function(){
+    btn.style.display = "none";
+    wrap.classList.remove("bd-hidden");
+    wrap.scrollIntoView({behavior:"smooth", block:"start"});
+  };
+})();
 
 newGame();
 render();
