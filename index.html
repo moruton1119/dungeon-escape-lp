@@ -69,6 +69,10 @@ nav a:hover{opacity:1;color:var(--gold)}
 .hero{
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
   text-align:center;color:#f3ecdc;position:relative;padding:90px 20px 120px;
+  background:transparent;
+}
+.hero-bgfix{
+  position:fixed;inset:0;z-index:-1;
   background:url(img/hero2.png) center 35%/cover no-repeat #0d1420;
 }
 .hero::after{
@@ -358,6 +362,7 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 </div>
 
 <!-- HERO -->
+<div class="hero-bgfix" aria-hidden="true"></div>
 <section class="hero">
   <div class="eyebrow">架空カードバトルローグライク</div>
   <h1>この相方、世界<span class="accent">最強</span><br>だけど<span class="accent">制御不能</span>。</h1>
