@@ -69,39 +69,7 @@ nav a:hover{opacity:1;color:var(--gold)}
 .hero{
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
   text-align:center;color:#f3ecdc;position:relative;padding:90px 20px 120px;
-  background:#0d1420;overflow:hidden;
-}
-.hero .bg{
-  position:absolute;inset:-6%;z-index:0;
-  background:url(img/hero2.png) center 35%/cover no-repeat;
-  animation:kenburns 26s ease-in-out infinite alternate;
-  will-change:transform;
-}
-@keyframes kenburns{
-  from{transform:scale(1) translateY(0)}
-  to{transform:scale(1.1) translateY(-2.5%)}
-}
-.hero .beam{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(115deg,transparent 30%,rgba(249,208,84,.16) 46%,rgba(249,208,84,.30) 50%,rgba(249,208,84,.16) 54%,transparent 70%);
-  background-size:300% 100%;
-  animation:beamflow 9s linear infinite;
-  mix-blend-mode:screen;
-}
-@keyframes beamflow{
-  from{background-position:120% 0}
-  to{background-position:-120% 0}
-}
-.hero .glowpulse{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 34% 28% at 72% 22%,rgba(185,60,216,.28),transparent 70%),
-             radial-gradient(ellipse 28% 22% at 18% 30%,rgba(101,53,201,.22),transparent 70%);
-  animation:glowpulse 5s ease-in-out infinite alternate;
-  mix-blend-mode:screen;
-}
-@keyframes glowpulse{
-  from{opacity:.45}
-  to{opacity:1}
+  background:url(img/hero2.png) center 35%/cover no-repeat #0d1420;
 }
 .hero::after{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -391,9 +359,6 @@ footer{padding:50px 20px 40px;text-align:center;font-size:12px;letter-spacing:.1
 
 <!-- HERO -->
 <section class="hero">
-  <div class="bg"></div>
-  <div class="beam"></div>
-  <div class="glowpulse"></div>
   <div class="eyebrow">架空カードバトルローグライク</div>
   <h1>この相方、世界<span class="accent">最強</span><br>だけど<span class="accent">制御不能</span>。</h1>
   <div class="sub">無茶をする相方。計算する俺。<br>3ターンの大技を、1ターンで撃ち抜く。</div>
